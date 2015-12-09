@@ -1,0 +1,63 @@
+{% extends "FlowerCoreBundle::layout.html.twig" %}
+
+{% block title %}{{ '%entity% list'|trans({'%entity%': 'Sale'}, 'Sale') }} - {{ parent() }}{% endblock %}
+{% macro thead(name, field, label) %}
+    {% spaceless %}
+        {% set sort = app.session.get('sort.' ~ name) %}
+        {% if sort and sort.field == field %}
+            {% if sort.type == 'DESC' %}
+                <a href="{{ path('sale_sort', {field: field, type: 'ASC'}) }}">{{ label | trans({},'Sale')}} <i class="fa fa-sort-down"></i></a>
+            {% elseif sort.type == 'ASC' %}
+                <a href="{{ path('sale_sort', {field: field, type: 'DESC'}) }}">{{ label | trans({},'Sale')}} <i class="fa fa-sort-up"></i></a>
+            {% endif %}
+        {% else %}
+            <a href="{{ path('sale_sort', {field: field, type: 'ASC'}) }}">{{ label | trans({},'Sale')}} <i class="fa fa-sort"></i></a>
+        {% endif %}
+    {% endspaceless %}
+{% endmacro %}
+
+{% from _self import thead %}
+
+
+{% block body %}
+    <section class="content-header">
+        <h1>
+            {{ '%entity% list'|trans({'%entity%': 'Sale'}, 'Sale') }}
+        </h1>
+    </section>
+    <section class="content">    
+        <div class="box">
+            <div class="box-header">
+                <div class="box-tools pull-right">                    <a class="btn btn-link btn-sm" href={{ path('sale_new') }}>
+                        <i class="fa fa-plus"></i> {{ 'Create a new %entity%'|trans({'%entity%': 'Sale'}, 'Sale') }}
+                    </a>
+                            </div>
+            </div>
+            <div class="box-body">    
+            <table class="table table-hover records_list table-condensed">
+                <thead>
+                    <tr>                        <th scope="col">{{ thead('sale', 'date', 'Date') }}</th>                        <th scope="col">{{ thead('sale', 'total', 'Total') }}</th>                        <th scope="col">{{ thead('sale', 'totalWithTax', 'Totalwithtax') }}</th>                        <th scope="col">{{ thead('sale', 'tax', 'Tax') }}</th>                        <th scope="col">{{ thead('sale', 'observations', 'Observations') }}</th>                    </tr>
+                </thead>
+                <tbody>
+                    {% for sale in paginator %}
+                        <tr>
+                                                             
+                                <td><a href="{{ path('sale_show', {id: sale.id}) }}">{{ sale.date | date('fullDateTime'| trans) }}</a></td>
+                                <td>{{ sale.total }}</td>
+                                <td>{{ sale.totalWithTax }}</td>
+                                <td>{{ sale.tax }}</td>
+                                <td>{{ sale.observations }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            {{ knp_pagination_render(paginator) }}
+            </div>
+        <div class="box-footer">
+
+        </div>
+        
+    </section>        
+
+{% endblock %}
