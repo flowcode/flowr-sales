@@ -3,7 +3,9 @@
 namespace Flower\SalesBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-
+/**
+ * Sale
+ */
 class Sale
 {
     /**
