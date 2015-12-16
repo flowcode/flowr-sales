@@ -29,9 +29,8 @@ class PaymentMethod
     protected $name;
 
     /**
-     * @var \stdClass
-     *
-     * @ORM\Column(name="sale", type="object")
+     * @ORM\OneToOne(targetEntity="Sale")
+     * @ORM\JoinColumn(referencedColumnName="id")
      */
     protected $sale;
 
@@ -69,24 +68,12 @@ class PaymentMethod
         return $this->name;
     }
 
-    /**
-     * Set sale
-     *
-     * @param \stdClass $sale
-     * @return PaymentMethod
-     */
-    public function setSale($sale)
+    
+    public function setSale(Sale $sale)
     {
         $this->sale = $sale;
-
-        return $this;
     }
 
-    /**
-     * Get sale
-     *
-     * @return \stdClass 
-     */
     public function getSale()
     {
         return $this->sale;

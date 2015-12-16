@@ -39,6 +39,12 @@ class SaleItem
      */
     protected $total;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Sales\Sale")
+     * @ORM\JoinColumn(name="sale", referencedColumnName="id")
+     */
+    protected $sale;
+
 
     /**
      * Get id
@@ -117,5 +123,28 @@ class SaleItem
     public function getTotal()
     {
         return $this->total;
+    }
+
+    /**
+     * Set sale
+     *
+     * @param \Flower\ModelBundle\Entity\Sales\Sale $sale
+     * @return SaleItem
+     */
+    public function setSale(\Flower\ModelBundle\Entity\Sales\Sale $sale = null)
+    {
+        $this->sale = $sale;
+
+        return $this;
+    }
+
+    /**
+     * Get sale
+     *
+     * @return \Flower\ModelBundle\Entity\Sales\Sale 
+     */
+    public function getSale()
+    {
+        return $this->sale;
     }
 }

@@ -52,6 +52,11 @@ class Sale
      */
     protected $observations;
 
+    /**
+     * @ORM\OneToMany(targetEntity="\Flower\ModelBundle\Entity\Sales\SaleItem", mappedBy="sale")
+     */
+    protected $saleItems;
+
 
     /**
      * Get id
@@ -176,5 +181,46 @@ class Sale
     public function getObservations()
     {
         return $this->observations;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->saleItems = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add saleItems
+     *
+     * @param \Flower\ModelBundle\Entity\Sales\SaleItem $saleItems
+     * @return Sale
+     */
+    public function addSaleItem(\Flower\ModelBundle\Entity\Sales\SaleItem $saleItems)
+    {
+        $this->saleItems[] = $saleItems;
+
+        return $this;
+    }
+
+    /**
+     * Remove saleItems
+     *
+     * @param \Flower\ModelBundle\Entity\Sales\SaleItem $saleItems
+     */
+    public function removeSaleItem(\Flower\ModelBundle\Entity\Sales\SaleItem $saleItems)
+    {
+        $this->saleItems->removeElement($saleItems);
+    }
+
+    /**
+     * Get saleItems
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSaleItems()
+    {
+        return $this->saleItems;
     }
 }
