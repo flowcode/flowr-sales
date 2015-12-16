@@ -19,21 +19,21 @@ class PaymentMethod
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var \stdClass
      *
      * @ORM\Column(name="sale", type="object")
      */
-    private $sale;
+    protected $sale;
 
 
     /**
