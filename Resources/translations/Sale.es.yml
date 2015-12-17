@@ -1,0 +1,10 @@
+'%entity% creation': 'Creación de Venta'
+'%entity% edit': 'Edición de Venta'
+'Create a new %entity%': 'Crear Venta'
+'%entity% list': 'Ventas'
+Account: Cuenta
+Date: Fecha
+Totalwithtax: Total con Impuesto
+Tax: impuesto
+Observations: Observaciones
+

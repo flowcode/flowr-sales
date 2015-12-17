@@ -16,7 +16,7 @@ use Doctrine\ORM\QueryBuilder;
  *
  * @Route("/sale")
  */
-class SaleController extends Controller
+class SaleController extends BaseController
 {
     /**
      * Lists all Sale entities.
@@ -29,11 +29,29 @@ class SaleController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('FlowerModelBundle:Sales\Sale')->createQueryBuilder('s');
-        $this->addQueryBuilderSort($qb, 'sale');
-        $paginator = $this->get('knp_paginator')->paginate($qb, $request->query->get('page', 1), 20);
+        $qb->leftJoin("s.account","a");
+
+        $filters = array('accountFilter' => "a.id");
+
+        if($request->query->has('reset')) {
+            $request->getSession()->set('filter.sale', null);
+            return $this->redirectToRoute("sale");
+        }
+
+        $this->saveFilters($request, $filters, 'sale','sale');
+        $paginator = $this->filter($qb,'sale',$request);
+        $accounts = $em->getRepository('FlowerModelBundle:Clients\Account')->findAll();
+        $accountFilter = $request->query->get("accountFilter");
+        $filters = $this->getFilters('sale');
+        if(!$accountFilter && $filters['accountFilter'] && $filters['accountFilter']["value"]){
+            $accountFilter = $filters['accountFilter']["value"];
+        }
+        $filters = $this->getFilters('sale');
         
         return array(
             'paginator' => $paginator,
+            'accountFilter' => $accountFilter,
+            'accounts' => $accounts,
         );
     }
 
@@ -78,39 +96,4 @@ class SaleController extends Controller
 
         return $this->redirect($this->generateUrl('sale'));
     }
-
-    /**
-     * @param string $name  session name
-     * @param string $field field name
-     * @param string $type  sort type ("ASC"/"DESC")
-     */
-    protected function setOrder($name, $field, $type = 'ASC')
-    {
-        $this->getRequest()->getSession()->set('sort.' . $name, array('field' => $field, 'type' => $type));
-    }
-
-    /**
-     * @param  string $name
-     * @return array
-     */
-    protected function getOrder($name)
-    {
-        $session = $this->getRequest()->getSession();
-
-        return $session->has('sort.' . $name) ? $session->get('sort.' . $name) : null;
-    }
-
-    /**
-     * @param QueryBuilder $qb
-     * @param string       $name
-     */
-    protected function addQueryBuilderSort(QueryBuilder $qb, $name)
-    {
-        $alias = current($qb->getDQLPart('from'))->getAlias();
-        if (is_array($order = $this->getOrder($name))) {
-            $qb->orderBy($alias . '.' . $order['field'], $order['type']);
-        }
-    }
-
-
 }
