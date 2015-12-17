@@ -25,16 +25,72 @@
         {{ include("FlowerSalesBundle::appnav.html.twig", { 'app_sale': true }) }} 
         <div class="box">
             <div class="box-header">
-                <div class="box-tools pull-right">                    <a class="btn btn-link btn-sm" href={{ path('sale_new') }}>
+                <div class="box-tools pull-right">
+                    <a class="btn btn-link btn-sm" href={{ path('sale_new') }}>
                         <i class="fa fa-plus"></i> {{ 'Create a new %entity%'|trans({'%entity%': 'Sale'}, 'Sale') }}
                     </a>
-                            </div>
+                </div>
             </div>
+
+            <div class="panel-heading">
+                <div class="btn-group">
+                    <div class="panel-heading">               
+                        <button type="button" class="btn btn-default btn-sm filter collapsed" data-toggle="collapse" data-target="#filter">{{'filter'|trans| capitalize }} <i class="fa fa-filter"></i> </button>
+                    </div>
+                </div>
+                {% set open = "" %}
+                {% if accountFilter |length > 0 %}
+                    {% set open = "in" %}
+                {% endif %}
+                <div id="filter" class="collapse {{open}} row filters-content">
+                    <form method="get" action="" class=" form-horizontal">
+                        <div  class="col-sm-6" >
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label " for="accountFilter">{{'Account' | trans }}</label>
+                                <div class="col-sm-8">
+                                    {% set multiple = "" %}
+                                    {% set icon = "ion-plus-circled" %}
+                                    {% if accountFilter |length > 1 %}
+                                        {% set  multiple = "multiple='true'" %}
+                                        {% set icon = "ion-ios-minus-outline" %}
+                                    {% endif %}
+                                    <select id="accountFilter" name="accountFilter[]" {{multiple}} class="form-control">
+                                        <option value=""></option>
+                                        {% set  selected = "" %}
+                                        {% if "-1" in accountFilter %}
+                                            {% set  selected = "selected" %}
+                                        {% endif %}
+                                        <option value="-1" {{selected}}> {{'Not Assignee' | trans}}</option>
+                                        {% for account in accounts %}
+                                            {% set  selected = "" %}
+                                            {% if account.id in accountFilter %}
+                                                {% set  selected = "selected" %}
+                                            {% endif %}
+                                            <option value="{{account.id}}" {{selected}}>{{account.name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                
+                                <div class="col-sm-1">
+                                    <span class="cursor-pointer text-left  ionicons {{icon}}" style="margin-top: 8px;" onclick="toogleSelect(accountFilter,this)"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class=" col-sm-9">
+                                    <a class="btn btn-default btn-sm" href="{{ path('sale') }}?reset"><i class="fa fa-times"></i> {{'clean' | trans | capitalize}}</a>
+                                    <button class="btn btn-primary btn-sm" type="submit">{{'apply' | trans | capitalize}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             <div class="box-body">    
             <table class="table table-hover records_list table-condensed">
                 <thead>
                     <tr>
-                        <th scope="col">{{ thead('sale', 'account', 'Account') }}</th>
+                        <th scope="col">{{ thead('sale', 'a.name', 'Account') }}</th>
                         <th scope="col">{{ thead('sale', 'date', 'Date') }}</th>
                         <th scope="col">{{ thead('sale', 'total', 'Total') }}</th>
                         <th scope="col">{{ thead('sale', 'totalWithTax', 'Totalwithtax') }}</th>
@@ -64,4 +120,29 @@
         
     </section>        
 
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+        function selectAll(parent){
+            $(".bulk input.bulk-check").attr("checked",parent.checked);
+        }
+        function toogleSelect (element, me) {
+            var multiple = $(element).attr("multiple");
+            if(multiple === undefined){
+                $(element).attr("multiple",true);
+                $(me).addClass("ion-ios-minus-outline")
+                $(me).removeClass("ion-plus-circled")
+            }else{
+                $(element).removeAttr("multiple");
+                $(me).removeClass("ion-ios-minus-outline")
+                $(me).addClass("ion-plus-circled")
+            }
+        }
+
+        function CopyMe(oFileInput, sTargetID) {
+            document.getElementById(sTargetID).value = oFileInput.value;
+        }
+    </script>
 {% endblock %}
