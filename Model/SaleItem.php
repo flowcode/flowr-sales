@@ -34,7 +34,11 @@ class SaleItem
      * @Groups({"public_api"})
      */
     protected $unitPrice;
-
+    /**
+     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Stock\Product", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="product", referencedColumnName="id")
+     */
+     protected $product;
     /**
      * @var float
      *
@@ -44,11 +48,19 @@ class SaleItem
     protected $total;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Sales\Sale")
+     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Sales\Sale", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="sale", referencedColumnName="id")
      */
     protected $sale;
 
+     
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->product = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -150,5 +162,30 @@ class SaleItem
     public function getSale()
     {
         return $this->sale;
+    }
+
+    
+
+    /**
+     * Set product
+     *
+     * @param \Flower\ModelBundle\Entity\Stock\Product $product
+     * @return SaleItem
+     */
+    public function setProduct(\Flower\ModelBundle\Entity\Stock\Product $product = null)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \Flower\ModelBundle\Entity\Stock\Product 
+     */
+    public function getProduct()
+    {
+        return $this->product;
     }
 }

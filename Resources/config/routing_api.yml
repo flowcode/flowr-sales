@@ -17,3 +17,8 @@ flower_api_sales_sale_item_findall:
     path:     /saleitem
     defaults: { _controller: FlowerSalesBundle:Api\SaleItem:getAll }
     methods: [GET]
+
+flower_api_sales_sale_item_new:
+    path:     /create
+    defaults: { _controller: FlowerSalesBundle:Api\Sale:create }
+    methods: [POST]

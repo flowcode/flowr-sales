@@ -7,8 +7,6 @@ use JMS\Serializer\Annotation\Groups;
 /**
  * PaymentMethod
  *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="Flower\ModelBundle\Entity\Sales\PaymentMethodRepository")
  */
 class PaymentMethod
 {
@@ -29,13 +27,6 @@ class PaymentMethod
      * @Groups({"public_api"})
      */
     protected $name;
-
-    /**
-     * @ORM\OneToOne(targetEntity="Sale")
-     * @ORM\JoinColumn(referencedColumnName="id")
-     */
-    protected $sale;
-
 
     /**
      * Get id
@@ -68,16 +59,5 @@ class PaymentMethod
     public function getName()
     {
         return $this->name;
-    }
-
-    
-    public function setSale(Sale $sale)
-    {
-        $this->sale = $sale;
-    }
-
-    public function getSale()
-    {
-        return $this->sale;
     }
 }

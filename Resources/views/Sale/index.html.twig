@@ -33,13 +33,20 @@
             <div class="box-body">    
             <table class="table table-hover records_list table-condensed">
                 <thead>
-                    <tr>                        <th scope="col">{{ thead('sale', 'date', 'Date') }}</th>                        <th scope="col">{{ thead('sale', 'total', 'Total') }}</th>                        <th scope="col">{{ thead('sale', 'totalWithTax', 'Totalwithtax') }}</th>                        <th scope="col">{{ thead('sale', 'tax', 'Tax') }}</th>                        <th scope="col">{{ thead('sale', 'observations', 'Observations') }}</th>                    </tr>
+                    <tr>
+                        <th scope="col">{{ thead('sale', 'account', 'Account') }}</th>
+                        <th scope="col">{{ thead('sale', 'date', 'Date') }}</th>
+                        <th scope="col">{{ thead('sale', 'total', 'Total') }}</th>
+                        <th scope="col">{{ thead('sale', 'totalWithTax', 'Totalwithtax') }}</th>
+                        <th scope="col">{{ thead('sale', 'tax', 'Tax') }}</th>
+                        <th scope="col">{{ thead('sale', 'observations', 'Observations') }}</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {% for sale in paginator %}
                         <tr>
-                                                             
-                                <td><a href="{{ path('sale_show', {id: sale.id}) }}">{{ sale.date | date('fullDateTime'| trans) }}</a></td>
+                                <td>{{ sale.account }}</td>
+                                <td><a href="{{ path('sale_new', {id: sale.id}) }}">{{ sale.date | date('fullDateTime'| trans) }}</a></td>
                                 <td>{{ sale.total }}</td>
                                 <td>{{ sale.totalWithTax }}</td>
                                 <td>{{ sale.tax }}</td>

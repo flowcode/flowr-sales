@@ -38,30 +38,6 @@ class SaleController extends Controller
     }
 
     /**
-     * Finds and displays a Sale entity.
-     *
-     * @Route("/{id}/show", name="sale_show", requirements={"id"="\d+"})
-     * @Method("GET")
-     * @Template()
-     */
-    public function showAction(Sale $sale)
-    {
-        $editForm = $this->createForm(new SaleType(), $sale, array(
-            'action' => $this->generateUrl('sale_update', array('id' => $sale->getid())),
-            'method' => 'PUT',
-        ));
-        $deleteForm = $this->createDeleteForm($sale->getId(), 'sale_delete');
-
-        return array(
-
-        'sale' => $sale,
-        'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-
-        );
-    }
-
-    /**
      * Displays a form to create a new Sale entity.
      *
      * @Route("/new", name="sale_new")
@@ -71,88 +47,10 @@ class SaleController extends Controller
     public function newAction()
     {
         $sale = new Sale();
-        $form = $this->createForm(new SaleType(), $sale);
-
         return array(
-            'sale' => $sale,
-            'form'   => $form->createView(),
+            'sale' => $sale
         );
     }
-
-    /**
-     * Creates a new Sale entity.
-     *
-     * @Route("/create", name="sale_create")
-     * @Method("POST")
-     * @Template("FlowerSalesBundle:Sale:new.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        $sale = new Sale();
-        $form = $this->createForm(new SaleType(), $sale);
-        if ($form->handleRequest($request)->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($sale);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('sale_show', array('id' => $sale->getId())));
-        }
-
-        return array(
-            'sale' => $sale,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Displays a form to edit an existing Sale entity.
-     *
-     * @Route("/{id}/edit", name="sale_edit", requirements={"id"="\d+"})
-     * @Method("GET")
-     * @Template()
-     */
-    public function editAction(Sale $sale)
-    {
-        $editForm = $this->createForm(new SaleType(), $sale, array(
-            'action' => $this->generateUrl('sale_update', array('id' => $sale->getid())),
-            'method' => 'PUT',
-        ));
-        $deleteForm = $this->createDeleteForm($sale->getId(), 'sale_delete');
-
-        return array(
-            'sale' => $sale,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Edits an existing Sale entity.
-     *
-     * @Route("/{id}/update", name="sale_update", requirements={"id"="\d+"})
-     * @Method("PUT")
-     * @Template("FlowerSalesBundle:Sale:edit.html.twig")
-     */
-    public function updateAction(Sale $sale, Request $request)
-    {
-        $editForm = $this->createForm(new SaleType(), $sale, array(
-            'action' => $this->generateUrl('sale_update', array('id' => $sale->getid())),
-            'method' => 'PUT',
-        ));
-        if ($editForm->handleRequest($request)->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirect($this->generateUrl('sale_show', array('id' => $sale->getId())));
-        }
-        $deleteForm = $this->createDeleteForm($sale->getId(), 'sale_delete');
-
-        return array(
-            'sale' => $sale,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
 
     /**
      * Save order.
@@ -199,38 +97,5 @@ class SaleController extends Controller
         }
     }
 
-    /**
-     * Deletes a Sale entity.
-     *
-     * @Route("/{id}/delete", name="sale_delete", requirements={"id"="\d+"})
-     * @Method("DELETE")
-     */
-    public function deleteAction(Sale $sale, Request $request)
-    {
-        $form = $this->createDeleteForm($sale->getId(), 'sale_delete');
-        if ($form->handleRequest($request)->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($sale);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('sale'));
-    }
-
-    /**
-     * Create Delete form
-     *
-     * @param integer                       $id
-     * @param string                        $route
-     * @return \Symfony\Component\Form\Form
-     */
-    protected function createDeleteForm($id, $route)
-    {
-        return $this->createFormBuilder(null, array('attr' => array('id' => 'delete')))
-            ->setAction($this->generateUrl($route, array('id' => $id)))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
 
 }

@@ -3,6 +3,7 @@
 namespace Flower\SalesBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Sale
  */
@@ -20,7 +21,7 @@ class Sale
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="date", type="datetime")
      */
     protected $date;
 
@@ -48,14 +49,47 @@ class Sale
     /**
      * @var string
      *
-     * @ORM\Column(name="observations", type="text")
+     * @ORM\Column(name="observations", type="text", nullable=true)
      */
     protected $observations;
 
     /**
-     * @ORM\OneToMany(targetEntity="\Flower\ModelBundle\Entity\Sales\SaleItem", mappedBy="sale")
+     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Clients\Contact")
+     * @ORM\JoinColumn(name="contact", referencedColumnName="id")
+     */
+    protected $contact;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Clients\Account")
+     * @ORM\JoinColumn(name="account", referencedColumnName="id")
+     */
+    protected $account;
+    /**
+     * @ORM\OneToMany(targetEntity="\Flower\ModelBundle\Entity\Sales\SaleItem", mappedBy="sale", cascade={"persist", "remove"})
      */
     protected $saleItems;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Sales\PaymentMethod")
+     * @ORM\JoinColumn(name="paymentmethod", referencedColumnName="id")
+     */
+    protected $paymentmethod;
+    
+    /**
+     * @var DateTime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="created", type="datetime")
+     */
+    protected $created;
+
+    /**
+     * @var DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updated", type="datetime")
+     */
+    protected $updated;
 
 
     /**
@@ -222,5 +256,121 @@ class Sale
     public function getSaleItems()
     {
         return $this->saleItems;
+    }
+    
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return Sale
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     * @return Sale
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime 
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * Set paymentmethod
+     *
+     * @param \Flower\ModelBundle\Entity\Sales\PaymentMethod $paymentmethod
+     * @return Sale
+     */
+    public function setPaymentmethod(\Flower\ModelBundle\Entity\Sales\PaymentMethod $paymentmethod = null)
+    {
+        $this->paymentmethod = $paymentmethod;
+
+        return $this;
+    }
+
+    /**
+     * Get paymentmethod
+     *
+     * @return \Flower\ModelBundle\Entity\Sales\PaymentMethod 
+     */
+    public function getPaymentmethod()
+    {
+        return $this->paymentmethod;
+    }
+
+    
+    /**
+     * Set contact
+     *
+     * @param \Flower\ModelBundle\Entity\Clients\Contact $contact
+     * @return Sale
+     */
+    public function setContact(\Flower\ModelBundle\Entity\Clients\Contact $contact = null)
+    {
+        $this->contact = $contact;
+
+        return $this;
+    }
+
+    /**
+     * Get contact
+     *
+     * @return \Flower\ModelBundle\Entity\Clients\Contact 
+     */
+    public function getContact()
+    {
+        return $this->contact;
+    }
+
+    /**
+     * Set account
+     *
+     * @param \Flower\ModelBundle\Entity\Clients\Account $account
+     * @return Sale
+     */
+    public function setAccount(\Flower\ModelBundle\Entity\Clients\Account $account = null)
+    {
+        $this->account = $account;
+
+        return $this;
+    }
+
+    /**
+     * Get account
+     *
+     * @return \Flower\ModelBundle\Entity\Clients\Account 
+     */
+    public function getAccount()
+    {
+        return $this->account;
     }
 }
