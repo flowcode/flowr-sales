@@ -1,0 +1,14 @@
+		<div class="nav-app">
+            <ul class="nav nav-tabs ">
+                <li role="presentation" class="app-icon bg-purple">
+                    <i class="fa fa-gift"></i>
+                </li>
+                <li role="presentation" 
+                {% if app_sale is defined %}class="active"{% endif %}
+                >
+                    <a href="{{ path('sale') }}">{{ '%entity% list'|trans({'%entity%': 'Sale'}, 'Sale') }}</a>
+                </li>
+                
+            </ul>
+        </div>
+

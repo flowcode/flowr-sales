@@ -1,9 +1,19 @@
-flower_api_sales_payment_methods_findall:
-    path:     /paymentmethods
+flower_api_sales_payment_method_show:
+    path:     /paymentmethod/{id}
+    defaults: { _controller: FlowerSalesBundle:Api\PaymentMethod:getById }
+    methods: [GET]
+
+flower_api_sales_payment_method_findall:
+    path:     /paymentmethod
     defaults: { _controller: FlowerSalesBundle:Api\PaymentMethod:getAll }
     methods: [GET]
 
-flower_api_sales_sale_items_findall:
-    path:     /saleitems
-    defaults: { _controller: FlowerSalesBundle:Api\SaleItems:getAll }
+flower_api_sales_sale_item_show:
+    path:     /saleitem/{id}
+    defaults: { _controller: FlowerSalesBundle:Api\SaleItem:getById }
+    methods: [GET]
+
+flower_api_sales_sale_item_findall:
+    path:     /saleitem
+    defaults: { _controller: FlowerSalesBundle:Api\SaleItem:getAll }
     methods: [GET]

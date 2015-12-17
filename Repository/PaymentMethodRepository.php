@@ -1,6 +1,6 @@
 <?php
 
-namespace Flower\ModelBundle\Entity\Sales;
+namespace Flower\SalesBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 

@@ -3,7 +3,7 @@
 namespace Flower\SalesBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use JMS\Serializer\Annotation\Groups;
 /**
  * SaleItem
  */
@@ -15,6 +15,7 @@ class SaleItem
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"public_api"})
      */
     protected $id;
 
@@ -22,6 +23,7 @@ class SaleItem
      * @var integer
      *
      * @ORM\Column(name="units", type="integer")
+     * @Groups({"public_api"})
      */
     protected $units;
 
@@ -29,6 +31,7 @@ class SaleItem
      * @var float
      *
      * @ORM\Column(name="unitPrice", type="float")
+     * @Groups({"public_api"})
      */
     protected $unitPrice;
 
@@ -36,6 +39,7 @@ class SaleItem
      * @var float
      *
      * @ORM\Column(name="total", type="float")
+     * @Groups({"public_api"})
      */
     protected $total;
 

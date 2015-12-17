@@ -20,12 +20,9 @@
 
 
 {% block body %}
-    <section class="content-header">
-        <h1>
-            {{ '%entity% list'|trans({'%entity%': 'Sale'}, 'Sale') }}
-        </h1>
-    </section>
+
     <section class="content">    
+        {{ include("FlowerSalesBundle::appnav.html.twig", { 'app_sale': true }) }} 
         <div class="box">
             <div class="box-header">
                 <div class="box-tools pull-right">                    <a class="btn btn-link btn-sm" href={{ path('sale_new') }}>
