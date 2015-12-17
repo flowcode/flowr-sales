@@ -12,6 +12,10 @@ flower_api_sales_sale_item_show:
     path:     /saleitem/{id}
     defaults: { _controller: FlowerSalesBundle:Api\SaleItem:getById }
     methods: [GET]
+flower_api_sales_sale_show:
+    path:     /sale/{id}
+    defaults: { _controller: FlowerSalesBundle:Api\Sale:get }
+    methods: [GET]
 
 flower_api_sales_sale_item_findall:
     path:     /saleitem
@@ -22,3 +26,8 @@ flower_api_sales_sale_item_new:
     path:     /create
     defaults: { _controller: FlowerSalesBundle:Api\Sale:create }
     methods: [POST]
+
+flower_api_sales_sale_item_edit:
+    path:     /edit/{sale}
+    defaults: { _controller: FlowerSalesBundle:Api\Sale:update }
+    methods: [PUT]

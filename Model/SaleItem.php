@@ -37,6 +37,7 @@ class SaleItem
     /**
      * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Stock\Product", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="product", referencedColumnName="id")
+     * @Groups({"public_api"})
      */
      protected $product;
     /**
@@ -164,7 +165,7 @@ class SaleItem
         return $this->sale;
     }
 
-    
+
 
     /**
      * Set product

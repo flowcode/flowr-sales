@@ -53,6 +53,21 @@ class SaleController extends Controller
     }
 
     /**
+     * Finds and displays a Sale entity.
+     *
+     * @Route("/{id}/show", name="sale_show", requirements={"id"="\d+"})
+     * @Method("GET")
+     * @Template("FlowerSalesBundle:Sale:new.html.twig")
+     */
+    public function showAction(Sale $sale)
+    {
+        return array(
+        'sale' => $sale,
+        );
+    }
+
+
+    /**
      * Save order.
      *
      * @Route("/order/{field}/{type}", name="sale_sort")

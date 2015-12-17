@@ -4,6 +4,7 @@ namespace Flower\SalesBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use JMS\Serializer\Annotation\Groups;
 /**
  * Sale
  */
@@ -15,6 +16,7 @@ class Sale
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"public_api"})
      */
     protected $id;
 
@@ -29,6 +31,7 @@ class Sale
      * @var float
      *
      * @ORM\Column(name="total", type="float")
+     * @Groups({"public_api"})
      */
     protected $total;
 
@@ -36,6 +39,7 @@ class Sale
      * @var float
      *
      * @ORM\Column(name="totalWithTax", type="float")
+     * @Groups({"public_api"})
      */
     protected $totalWithTax;
 
@@ -43,6 +47,7 @@ class Sale
      * @var float
      *
      * @ORM\Column(name="tax", type="float")
+     * @Groups({"public_api"})
      */
     protected $tax;
 
@@ -50,28 +55,33 @@ class Sale
      * @var string
      *
      * @ORM\Column(name="observations", type="text", nullable=true)
+     * @Groups({"public_api"})
      */
     protected $observations;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Clients\Contact")
      * @ORM\JoinColumn(name="contact", referencedColumnName="id")
+     * @Groups({"public_api"})
      */
     protected $contact;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Clients\Account")
      * @ORM\JoinColumn(name="account", referencedColumnName="id")
+     * @Groups({"public_api"})
      */
     protected $account;
     /**
      * @ORM\OneToMany(targetEntity="\Flower\ModelBundle\Entity\Sales\SaleItem", mappedBy="sale", cascade={"persist", "remove"})
+     * @Groups({"public_api"})
      */
     protected $saleItems;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Sales\PaymentMethod")
      * @ORM\JoinColumn(name="paymentmethod", referencedColumnName="id")
+     * @Groups({"public_api"})
      */
     protected $paymentmethod;
     
@@ -327,7 +337,7 @@ class Sale
         return $this->paymentmethod;
     }
 
-    
+
     /**
      * Set contact
      *

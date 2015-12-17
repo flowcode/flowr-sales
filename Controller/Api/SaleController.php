@@ -18,6 +18,32 @@ use Flower\SalesBundle\Form\Type\Api\SaleType;
 class SaleController extends FOSRestController
 {
 
+    public function updateAction(Request $request, Sale $sale)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm($this->get("form.api.sale"), $sale, array(
+            'method' => 'PUT',
+        ));
+        $this->removeExtraFields($request,$form);
+        $form->submit($request);
+        if ($form->isValid()) {
+            foreach ($sale->getSaleItems() as $item) {
+                if(!$item->getProduct() || $item->getUnits() == 0 ){
+                    $sale->removeSaleItem($item);
+                    $item->setSale(null);
+                    $em->remove($item);
+                }else{
+                    $item->setSale($sale);
+                }
+            }
+            $em->flush();
+            $response = array("success" => true, "message" => "Sale created", "entity" =>$sale );
+            return $this->handleView(FOSView::create($response, Codes::HTTP_OK)->setFormat("json"));
+        }
+        $response= array('success' => false, 'errors' => $form->getErrors());
+        return $this->handleView(FOSView::create($response, Codes::HTTP_NOT_FOUND)->setFormat("json"));
+    }
+
     public function createAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -45,5 +71,12 @@ class SaleController extends FOSRestController
         $children = $form->all();
         $data     = array_intersect_key($data, $children);
         $request->request->replace($data);
+    }
+
+    public function getAction(Request $request, Sale $sale )
+    {
+        $view = FOSView::create($sale, Codes::HTTP_OK)->setFormat('json');
+        $view->getSerializationContext()->setGroups(array('public_api'));
+        return $this->handleView($view);
     }
 }

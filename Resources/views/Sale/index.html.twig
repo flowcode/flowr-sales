@@ -46,7 +46,7 @@
                     {% for sale in paginator %}
                         <tr>
                                 <td>{{ sale.account }}</td>
-                                <td><a href="{{ path('sale_new', {id: sale.id}) }}">{{ sale.date | date('fullDateTime'| trans) }}</a></td>
+                                <td><a href="{{ path('sale_show', {id: sale.id}) }}">{{ sale.date | date('fullDateTime'| trans) }}</a></td>
                                 <td>{{ sale.total }}</td>
                                 <td>{{ sale.totalWithTax }}</td>
                                 <td>{{ sale.tax }}</td>
