@@ -9,7 +9,6 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View as FOSView;
 use Symfony\Component\Form\Form;
-use Flower\SalesBundle\Form\Type\Api\SaleType;
 
 /**
  * Sale controller.
