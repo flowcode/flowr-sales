@@ -61,6 +61,32 @@ class SaleController extends BaseController
         );
     }
 
+        /**
+     *
+     * @Route("/export", name="sale_export")
+     * @Method("GET")
+     */
+    public function exportViewAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->getRepository('FlowerModelBundle:Sales\Sale')->createQueryBuilder('s');
+        $qb->leftJoin("s.account","a");
+
+        $limit = 20;
+        $currPage = $request->query->get('page');
+        if($currPage){
+            $sales = $this->filter($qb,'sale',$request, $limit, $currPage);
+        } else {
+            $sales = $this->filter($qb,'sale',$request, -1);
+        }
+        
+        $data = $this->get("sales.service.sale")->saleDataExport($sales);
+        $this->get("sales.service.excelexport")->exportData($data,"Ventas","Exportación de ventas.");
+        die();
+        return $this->redirectToRoute("sale");
+    }
+
+
     /**
      * Displays a form to create a new Sale entity.
      *

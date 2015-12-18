@@ -8,4 +8,9 @@ services:
         tags:
             - { name: form.type, alias: contact_type }
 
-
+    sales.service.sale:
+        class: Flower\SalesBundle\Service\SaleService
+        arguments: ['@service_container']
+    sales.service.excelexport:
+        class: Flower\SalesBundle\Service\ExcelExportService
+        arguments: ['@service_container']
