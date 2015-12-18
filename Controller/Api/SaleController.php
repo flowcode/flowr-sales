@@ -52,6 +52,7 @@ class SaleController extends FOSRestController
         $form->submit($request);
         if ($form->isValid()) {            
             $sale->setDate(new \DateTime());
+            $sale->setOwner($this->getUser());
             foreach ($sale->getSaleItems() as $item) {
                 $item->setSale($sale);
             }

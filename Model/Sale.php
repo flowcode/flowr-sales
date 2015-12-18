@@ -5,6 +5,8 @@ namespace Flower\SalesBundle\Model;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation\Groups;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 /**
  * Sale
  */
@@ -72,6 +74,12 @@ class Sale
      * @Groups({"public_api"})
      */
     protected $account;
+    /**
+     * @ManyToOne(targetEntity="\Flower\ModelBundle\Entity\User\User")
+     * @JoinColumn(name="user_id", referencedColumnName="id")
+     * @Groups({"public_api"})
+     * */
+    protected $owner;
     /**
      * @ORM\OneToMany(targetEntity="\Flower\ModelBundle\Entity\Sales\SaleItem", mappedBy="sale", cascade={"persist", "remove"})
      * @Groups({"public_api"})
@@ -382,5 +390,28 @@ class Sale
     public function getAccount()
     {
         return $this->account;
+    }
+    
+    /**
+     * Set owner
+     *
+     * @param \Flower\ModelBundle\Entity\User\User $owner
+     * @return Sale
+     */
+    public function setOwner(\Flower\ModelBundle\Entity\User\User $owner = null)
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * Get owner
+     *
+     * @return \Flower\ModelBundle\Entity\User\User 
+     */
+    public function getOwner()
+    {
+        return $this->owner;
     }
 }
