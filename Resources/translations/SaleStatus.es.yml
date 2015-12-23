@@ -1,0 +1,18 @@
+'%entity% List': 'Lista de estados de venta'
+'%entity% creation': 'Crear estado de venta'
+'%entity% edit': 'Editar estado de venta'
+'%entity% list': 'Lista de estados de venta'
+'Confirm delete': 'Confirmar borrado'
+'Create a new %entity%': 'Crear nuevo estado de venta'
+Delete: Borrar
+'Do you want to proceed?': '¿Desea continuar de todos modos?'
+Edit: Editar
+Name: Nombre
+'No': 'No'
+SaleStatus: Estado de venta
+'SaleStatus list': 'Lista de estados de ventas'
+Salemodificable: Venta modificable
+'Yes': 'Si'
+'You are about to delete an item': 'Usted esta por borrar un elemento'
+'this procedure is irreversible': 'esta acción sera irreversible'
+'salesstatus': Estado de ventas

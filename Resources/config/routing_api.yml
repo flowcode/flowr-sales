@@ -8,6 +8,11 @@ flower_api_sales_payment_method_findall:
     defaults: { _controller: FlowerSalesBundle:Api\PaymentMethod:getAll }
     methods: [GET]
 
+flower_api_sales_status_findall:
+    path:     /salestatus
+    defaults: { _controller: FlowerSalesBundle:Api\SaleStatus:getAll }
+    methods: [GET]
+
 flower_api_sales_sale_item_show:
     path:     /saleitem/{id}
     defaults: { _controller: FlowerSalesBundle:Api\SaleItem:getById }

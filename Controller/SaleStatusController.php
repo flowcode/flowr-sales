@@ -7,29 +7,29 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Flower\ModelBundle\Entity\Sales\PaymentMethod;
-use Flower\SalesBundle\Form\Type\PaymentMethodType;
+use Flower\ModelBundle\Entity\Sales\SaleStatus;
+use Flower\SalesBundle\Form\Type\SaleStatusType;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * PaymentMethod controller.
+ * SaleStatus controller.
  *
- * @Route("/admin/paymentmethod")
+ * @Route("/admin/salesstatus")
  */
-class PaymentMethodController extends Controller
+class SaleStatusController extends Controller
 {
     /**
-     * Lists all PaymentMethod entities.
+     * Lists all SaleStatus entities.
      *
-     * @Route("/", name="paymentmethod")
+     * @Route("/", name="admin_salesstatus")
      * @Method("GET")
      * @Template()
      */
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $qb = $em->getRepository('FlowerModelBundle:Sales\PaymentMethod')->createQueryBuilder('s');
-        $this->addQueryBuilderSort($qb, 'paymentmethod');
+        $qb = $em->getRepository('FlowerModelBundle:Sales\SaleStatus')->createQueryBuilder('s');
+        $this->addQueryBuilderSort($qb, 'salestatus');
         $paginator = $this->get('knp_paginator')->paginate($qb, $request->query->get('page', 1), 20);
         
         return array(
@@ -38,23 +38,23 @@ class PaymentMethodController extends Controller
     }
 
     /**
-     * Finds and displays a PaymentMethod entity.
+     * Finds and displays a SaleStatus entity.
      *
-     * @Route("/{id}/show", name="paymentmethod_show", requirements={"id"="\d+"})
+     * @Route("/{id}/show", name="admin_salesstatus_show", requirements={"id"="\d+"})
      * @Method("GET")
      * @Template()
      */
-    public function showAction(PaymentMethod $paymentmethod)
+    public function showAction(SaleStatus $salestatus)
     {
-        $editForm = $this->createForm(new PaymentMethodType(), $paymentmethod, array(
-            'action' => $this->generateUrl('paymentmethod_update', array('id' => $paymentmethod->getid())),
+        $editForm = $this->createForm(new SaleStatusType(), $salestatus, array(
+            'action' => $this->generateUrl('admin_salesstatus_update', array('id' => $salestatus->getid())),
             'method' => 'PUT',
         ));
-        $deleteForm = $this->createDeleteForm($paymentmethod->getId(), 'paymentmethod_delete');
+        $deleteForm = $this->createDeleteForm($salestatus->getId(), 'admin_salesstatus_delete');
 
         return array(
 
-        'paymentmethod' => $paymentmethod,
+        'salestatus' => $salestatus,
         'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
 
@@ -62,92 +62,92 @@ class PaymentMethodController extends Controller
     }
 
     /**
-     * Displays a form to create a new PaymentMethod entity.
+     * Displays a form to create a new SaleStatus entity.
      *
-     * @Route("/new", name="paymentmethod_new")
+     * @Route("/new", name="admin_salesstatus_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $paymentmethod = new PaymentMethod();
-        $form = $this->createForm(new PaymentMethodType(), $paymentmethod);
+        $salestatus = new SaleStatus();
+        $form = $this->createForm(new SaleStatusType(), $salestatus);
 
         return array(
-            'paymentmethod' => $paymentmethod,
+            'salestatus' => $salestatus,
             'form'   => $form->createView(),
         );
     }
 
     /**
-     * Creates a new PaymentMethod entity.
+     * Creates a new SaleStatus entity.
      *
-     * @Route("/create", name="paymentmethod_create")
+     * @Route("/create", name="admin_salesstatus_create")
      * @Method("POST")
-     * @Template("FlowerCoreBundle:PaymentMethod:new.html.twig")
+     * @Template("FlowerCoreBundle:SaleStatus:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $paymentmethod = new PaymentMethod();
-        $form = $this->createForm(new PaymentMethodType(), $paymentmethod);
+        $salestatus = new SaleStatus();
+        $form = $this->createForm(new SaleStatusType(), $salestatus);
         if ($form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($paymentmethod);
+            $em->persist($salestatus);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('paymentmethod_show', array('id' => $paymentmethod->getId())));
+            return $this->redirect($this->generateUrl('admin_salesstatus_show', array('id' => $salestatus->getId())));
         }
 
         return array(
-            'paymentmethod' => $paymentmethod,
+            'salestatus' => $salestatus,
             'form'   => $form->createView(),
         );
     }
 
     /**
-     * Displays a form to edit an existing PaymentMethod entity.
+     * Displays a form to edit an existing SaleStatus entity.
      *
-     * @Route("/{id}/edit", name="paymentmethod_edit", requirements={"id"="\d+"})
+     * @Route("/{id}/edit", name="admin_salesstatus_edit", requirements={"id"="\d+"})
      * @Method("GET")
      * @Template()
      */
-    public function editAction(PaymentMethod $paymentmethod)
+    public function editAction(SaleStatus $salestatus)
     {
-        $editForm = $this->createForm(new PaymentMethodType(), $paymentmethod, array(
-            'action' => $this->generateUrl('paymentmethod_update', array('id' => $paymentmethod->getid())),
+        $editForm = $this->createForm(new SaleStatusType(), $salestatus, array(
+            'action' => $this->generateUrl('admin_salesstatus_update', array('id' => $salestatus->getid())),
             'method' => 'PUT',
         ));
-        $deleteForm = $this->createDeleteForm($paymentmethod->getId(), 'paymentmethod_delete');
+        $deleteForm = $this->createDeleteForm($salestatus->getId(), 'admin_salesstatus_delete');
 
         return array(
-            'paymentmethod' => $paymentmethod,
+            'salestatus' => $salestatus,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
-     * Edits an existing PaymentMethod entity.
+     * Edits an existing SaleStatus entity.
      *
-     * @Route("/{id}/update", name="paymentmethod_update", requirements={"id"="\d+"})
+     * @Route("/{id}/update", name="admin_salesstatus_update", requirements={"id"="\d+"})
      * @Method("PUT")
-     * @Template("FlowerCoreBundle:PaymentMethod:edit.html.twig")
+     * @Template("FlowerCoreBundle:SaleStatus:edit.html.twig")
      */
-    public function updateAction(PaymentMethod $paymentmethod, Request $request)
+    public function updateAction(SaleStatus $salestatus, Request $request)
     {
-        $editForm = $this->createForm(new PaymentMethodType(), $paymentmethod, array(
-            'action' => $this->generateUrl('paymentmethod_update', array('id' => $paymentmethod->getid())),
+        $editForm = $this->createForm(new SaleStatusType(), $salestatus, array(
+            'action' => $this->generateUrl('admin_salesstatus_update', array('id' => $salestatus->getid())),
             'method' => 'PUT',
         ));
         if ($editForm->handleRequest($request)->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirect($this->generateUrl('paymentmethod_show', array('id' => $paymentmethod->getId())));
+            return $this->redirect($this->generateUrl('admin_salesstatus_show', array('id' => $salestatus->getId())));
         }
-        $deleteForm = $this->createDeleteForm($paymentmethod->getId(), 'paymentmethod_delete');
+        $deleteForm = $this->createDeleteForm($salestatus->getId(), 'admin_salesstatus_delete');
 
         return array(
-            'paymentmethod' => $paymentmethod,
+            'salestatus' => $salestatus,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -157,13 +157,13 @@ class PaymentMethodController extends Controller
     /**
      * Save order.
      *
-     * @Route("/order/{field}/{type}", name="paymentmethod_sort")
+     * @Route("/order/{field}/{type}", name="admin_salesstatus_sort")
      */
     public function sortAction($field, $type)
     {
-        $this->setOrder('paymentmethod', $field, $type);
+        $this->setOrder('salestatus', $field, $type);
 
-        return $this->redirect($this->generateUrl('paymentmethod'));
+        return $this->redirect($this->generateUrl('admin_salesstatus'));
     }
 
     /**
@@ -200,21 +200,21 @@ class PaymentMethodController extends Controller
     }
 
     /**
-     * Deletes a PaymentMethod entity.
+     * Deletes a SaleStatus entity.
      *
-     * @Route("/{id}/delete", name="paymentmethod_delete", requirements={"id"="\d+"})
+     * @Route("/{id}/delete", name="admin_salesstatus_delete", requirements={"id"="\d+"})
      * @Method("DELETE")
      */
-    public function deleteAction(PaymentMethod $paymentmethod, Request $request)
+    public function deleteAction(SaleStatus $salestatus, Request $request)
     {
-        $form = $this->createDeleteForm($paymentmethod->getId(), 'paymentmethod_delete');
+        $form = $this->createDeleteForm($salestatus->getId(), 'admin_salesstatus_delete');
         if ($form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($paymentmethod);
+            $em->remove($salestatus);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('paymentmethod'));
+        return $this->redirect($this->generateUrl('admin_salesstatus'));
     }
 
     /**

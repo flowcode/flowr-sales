@@ -30,8 +30,9 @@ class SaleController extends BaseController
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('FlowerModelBundle:Sales\Sale')->createQueryBuilder('s');
         $qb->leftJoin("s.account","a");
+        $qb->leftJoin("s.status","es");
 
-        $filters = array('accountFilter' => "a.id", 'ownerFilter' => 's.owner');
+        $filters = array('accountFilter' => "a.id", 'ownerFilter' => 's.owner', 'statusFilter' => 'es.id');
 
         if($request->query->has('reset')) {
             $request->getSession()->set('filter.sale', null);
@@ -41,6 +42,7 @@ class SaleController extends BaseController
         $this->saveFilters($request, $filters, 'sale','sale');
         $paginator = $this->filter($qb,'sale',$request);
         $accounts = $em->getRepository('FlowerModelBundle:Clients\Account')->findAll();
+        $status = $em->getRepository('FlowerModelBundle:Sales\SaleStatus')->findAll();
         $users = $em->getRepository('FlowerModelBundle:User\User')->findAll();
         $accountFilter = $request->query->get("accountFilter");
         $filters = $this->getFilters('sale');
@@ -50,11 +52,17 @@ class SaleController extends BaseController
         $ownerFilter = $request->query->get("ownerFilter");
         if(!$ownerFilter && $filters['ownerFilter'] && $filters['ownerFilter']["value"]){
             $ownerFilter = $filters['ownerFilter']["value"];
-        }       
+        }
+        $statusFilter = $request->query->get("statusFilter");
+        if(!$statusFilter && $filters['statusFilter'] && $filters['statusFilter']["value"]){
+            $statusFilter = $filters['statusFilter']["value"];
+        }    
         
         return array(
             'users' => $users,
+            'statuses' => $status,
             'ownerFilter' => $ownerFilter,
+            'statusFilter' => $statusFilter,
             'paginator' => $paginator,
             'accountFilter' => $accountFilter,
             'accounts' => $accounts,

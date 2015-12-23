@@ -109,7 +109,12 @@ class Sale
      */
     protected $updated;
 
-
+    /**
+     * @ORM\ManyToOne(targetEntity="SaleStatus")
+     * @ORM\JoinColumn(name="status", referencedColumnName="id")
+     * @Groups({"public_api"})
+     */
+     protected $status;
     /**
      * Get id
      *
@@ -413,5 +418,28 @@ class Sale
     public function getOwner()
     {
         return $this->owner;
+    }
+
+    /**
+     * Set status
+     *
+     * @param \Flower\ModelBundle\Entity\Sales\SaleStatus $status
+     * @return Sale
+     */
+    public function setStatus(\Flower\ModelBundle\Entity\Sales\SaleStatus $status = null)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return \Flower\ModelBundle\Entity\Sales\SaleStatus 
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

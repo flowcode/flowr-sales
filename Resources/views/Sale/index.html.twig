@@ -92,12 +92,6 @@
                                     <span class="cursor-pointer text-left  ionicons {{icon}}" style="margin-top: 8px;" onclick="toogleSelect(accountFilter,this)"></span>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class=" col-sm-9">
-                                    <a class="btn btn-default btn-sm" href="{{ path('sale') }}?reset"><i class="fa fa-times"></i> {{'clean' | trans | capitalize}}</a>
-                                    <button class="btn btn-primary btn-sm" type="submit">{{'apply' | trans | capitalize}}</button>
-                                </div>
-                            </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -127,6 +121,44 @@
                                 </div>
                             </div>
                         </div>
+                        <div  class="col-sm-6" >
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label " for="statusFilter">{{'Status' | trans({},"Sale") }}</label>
+                                <div class="col-sm-8">
+                                    {% set multiple = "" %}
+                                    {% set icon = "ion-plus-circled" %}
+                                    {% if statusFilter |length > 1 %}
+                                        {% set  multiple = "multiple='true'" %}
+                                        {% set icon = "ion-ios-minus-outline" %}
+                                    {% endif %}
+                                    <select id="statusFilter" name="statusFilter[]" {{multiple}} class="form-control">
+                                        <option value=""></option>
+                                        {% set  selected = "" %}
+                                        {% if "-1" in statusFilter %}
+                                            {% set  selected = "selected" %}
+                                        {% endif %}
+                                        <option value="-1" {{selected}}> {{'Not Assignee' | trans}}</option>
+                                        {% for status in statuses %}
+                                            {% set  selected = "" %}
+                                            {% if status.id in statusFilter %}
+                                                {% set  selected = "selected" %}
+                                            {% endif %}
+                                            <option value="{{status.id}}" {{selected}}>{{status.name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                
+                                <div class="col-sm-1">
+                                    <span class="cursor-pointer text-left  ionicons {{icon}}" style="margin-top: 8px;" onclick="toogleSelect(statusFilter,this)"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class=" col-sm-9">
+                                    <a class="btn btn-default btn-sm" href="{{ path('sale') }}?reset"><i class="fa fa-times"></i> {{'clean' | trans | capitalize}}</a>
+                                    <button class="btn btn-primary btn-sm" type="submit">{{'apply' | trans | capitalize}}</button>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -137,6 +169,7 @@
                     <tr>
                         <th scope="col">{{ thead('sale', 'id', 'Id') }}</th>
                         <th scope="col">{{ thead('sale', 'a.name', 'Account') }}</th>
+                        <th scope="col">{{ thead('sale', 'es.name', 'Status') }}</th>
                         <th scope="col">{{ thead('sale', 'total', 'Total') }}</th>
                         <th scope="col">{{ thead('sale', 'tax', 'Tax') }}</th>
                         <th scope="col">{{ thead('sale', 'totalWithTax', 'Totalwithtax') }}</th>
@@ -148,12 +181,13 @@
                 <tbody>
                     {% for sale in paginator %}
                         <tr>
-                                <td><a href="{{ path('sale_show', {id: sale.id}) }}">{{ sale.id }}</a></td>
+                                <td><a href="{{ path('sale_show', {id: sale.id}) }}"># {{ sale.id }}</a></td>
                                 {% if sale.account %}
                                     <td><a href="{{ path('account_show', {id: sale.account.id}) }}">{{ sale.account }}</a></td>
                                 {% else %}
                                     <td></td>
                                 {% endif %}
+                                <td><a href="{{ path('sale_show', {id: sale.id}) }}">{{ sale.status }}</a></td>
                                 <td>{{ sale.total }}</td>
                                 <td>{{ sale.tax }}</td>
                                 <td>{{ sale.totalWithTax }}</td>

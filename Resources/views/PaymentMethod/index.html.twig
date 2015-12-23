@@ -21,6 +21,7 @@
 
 {% block body %}
     <section class="content-header">
+        {% include 'FlowerCoreBundle:Default:admin_nav.html.twig' %}
         <h1>
             {{ '%entity% list'|trans({'%entity%': 'PaymentMethod'}, 'PaymentMethod') }}
         </h1>

@@ -39,7 +39,7 @@ class SaleItem
      * @ORM\JoinColumn(name="product", referencedColumnName="id")
      * @Groups({"public_api"})
      */
-     protected $product;
+    protected $product;
     /**
      * @var float
      *

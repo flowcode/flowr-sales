@@ -1,7 +1,7 @@
-'%entity% creation': 'Creación de Venta'
-'%entity% edit': 'Edición de Venta'
-'Create a new %entity%': 'Crear Venta'
-'%entity% list': 'Ventas'
+'%entity% creation': 'Creación de Pedido'
+'%entity% edit': 'Edición de Pedido'
+'Create a new %entity%': 'Crear Pedido'
+'%entity% list': 'Pedidos'
 Account: Cuenta
 Date: Fecha
 Totalwithtax: Total con Impuesto
@@ -9,3 +9,4 @@ Tax: impuesto
 Observations: Observaciones
 Created: Creado
 Updated: Actualizado
+Status: Estado

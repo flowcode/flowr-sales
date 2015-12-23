@@ -23,6 +23,8 @@ class SaleType extends AbstractType
             ->add('contact', 'entity', array(
                                 'class' => 'Flower\ModelBundle\Entity\Clients\Contact'))
             ->add('observations')
+            ->add("status", 'entity', array(
+                                'class' => 'Flower\ModelBundle\Entity\Sales\SaleStatus'))
             ->add("paymentMethod", 'entity', array(
                                 'class' => 'Flower\ModelBundle\Entity\Sales\PaymentMethod'))
             ->add('saleItems', 'collection', array(

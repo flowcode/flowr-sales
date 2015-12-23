@@ -1,0 +1,16 @@
+'%entity% List': 'Lista de formas de pago'
+'%entity% creation': 'Crear forma de pago'
+'%entity% edit': 'Editar forma de pago'
+'%entity% list': 'Lista de formas de pago'
+'Confirm delete': 'Confirm delete'
+'Create a new %entity%': 'Crear nueva forma de pago'
+Delete: Borrar
+'Do you want to proceed?': '¿Desea continuar de todos modos?'
+Edit: Editar
+Name: Nombre
+'No': 'No'
+PaymentMethod: Forma de pago
+'PaymentMethod list': 'Lista de formas de pago'
+'Yes': 'Si'
+'You are about to delete an item': 'Usted esta por borrar un elemento'
+'this procedure is irreversible': 'esta acción sera irreversible'
