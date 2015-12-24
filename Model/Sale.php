@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping\ManyToOne;
  */
 class Sale
 {
+    const CIRCUIT_ONE = 1;
+    const CIRCUIT_TWO = 2;
     /**
      * @var integer
      *
@@ -115,6 +117,15 @@ class Sale
      * @Groups({"public_api"})
      */
      protected $status;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="circuit", type="integer")
+     * @Groups({"public_api"})
+     */
+    protected $circuit;
+
     /**
      * Get id
      *
@@ -441,5 +452,29 @@ class Sale
     public function getStatus()
     {
         return $this->status;
+    }
+
+
+    /**
+     * Set circuit
+     *
+     * @param integer $circuit
+     * @return SaleItem
+     */
+    public function setCircuit($circuit)
+    {
+        $this->circuit = $circuit;
+
+        return $this;
+    }
+
+    /**
+     * Get circuit
+     *
+     * @return integer 
+     */
+    public function getCircuit()
+    {
+        return $this->circuit;
     }
 }

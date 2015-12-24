@@ -18,6 +18,7 @@ class SaleType extends AbstractType
             ->add('total')
             ->add('totalWithTax')
             ->add('tax')
+            ->add('circuit')
             ->add('account', 'entity', array(
                                 'class' => 'Flower\ModelBundle\Entity\Clients\Account'))
             ->add('contact', 'entity', array(

@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Flower\ModelBundle\Entity\Sales\Sale;
 use Flower\SalesBundle\Form\Type\SaleType;
 use Doctrine\ORM\QueryBuilder;
-
+use Ps\PdfBundle\Annotation\Pdf;
 /**
  * Sale controller.
  *
@@ -136,4 +136,16 @@ class SaleController extends BaseController
 
         return $this->redirect($this->generateUrl('sale'));
     }
+
+    /**
+    * @Pdf()
+    * @Route("/print/{id}/pdf", name="sale_pdf_export", requirements={"id"="\d+"},  defaults={ "_format"="pdf" })
+    * @Template()
+    */
+        public function printPDFAction(Sale $sale)
+        {
+            return array(
+            'sale' => $sale,
+            );
+        }
 }

@@ -176,6 +176,7 @@
                         <th scope="col">{{ thead('sale', 'observations', 'Observations') }}</th>
                         <th scope="col">{{ thead('sale', 'created', 'Created') }}</th>
                         <th scope="col">{{ thead('sale', 'updated', 'Updated') }}</th>
+                        <th scope="col">{{ 'print' | trans({},'Sale') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -194,6 +195,10 @@
                                 <td width="20%"><a href="{{ path('sale_show', {id: sale.id}) }}">{{ sale.observations }}</a></td>
                                 <td>{{ sale.updated | date('fullDateTime'| trans)}}</td>
                                 <td>{{ sale.created | date('fullDateTime'| trans)}}</td>
+                                <td>
+                                    <a href="{{ path('sale_pdf_export', {id: sale.id}) }}">factura</a>
+                                    
+                                </td>
                         </tr>
                     {% endfor %}
                 </tbody>

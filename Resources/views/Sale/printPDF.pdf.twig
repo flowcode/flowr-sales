@@ -1,0 +1,79 @@
+<pdf>
+    <dynamic-page>
+        <h1>ORDEN DE PEDIDO</h1>
+	<h3>Datos de la empresa</h3>
+    <table class="table table-striped table-hover table-bordered records_list">
+            <tr>
+                <td padding="5px">{{ 'name' | trans({},'Sale') }}</td>
+                <td padding="5px">{{sale.account.name}}</td>
+            </tr>
+            <tr>
+                <td padding="5px">{{ 'businessName' | trans({},'Sale') }}</td>
+                <td padding="5px">{{sale.account.businessName}}</td>
+            </tr>
+            <tr>
+                <td padding="5px">{{ 'activity' | trans({},'Sale') }}</td>
+                <td padding="5px">{{sale.account.activity}}</td>
+            </tr>
+            <tr>
+                <td padding="5px">{{ 'CUIT' | trans({},'Sale') }}</td>
+                <td padding="5px">{{sale.account.cuit}}</td>
+            </tr>
+    </table>
+    <h3>Información de contacto</h3>
+        <table class="table table-striped table-hover table-bordered records_list">
+            <tr>
+                <td padding="5px">{{ 'Name' | trans({},'Sale') }}</td>
+                <td padding="5px">{{sale.contact.happyName}}</td>
+            </tr>
+            <tr>
+                <td padding="5px">{{ 'phone' | trans({},'Sale') }}</td>
+                <td padding="5px">{{sale.contact.phone}}</td>
+            </tr>
+            <tr>
+                <td padding="5px">{{ 'email' | trans({},'Sale') }}</td>
+                <td padding="5px">{{sale.contact.email}}</td>
+            </tr>
+    </table>
+<h3>Descripción</h3>
+        <table class="table table-striped table-hover table-bordered records_list">
+            <tr background.color="lightgray">
+                <td padding="5px">{{ 'Product' | trans({},'Sale') }}</td>
+                <td padding="5px">{{ 'Units' | trans({},'Sale') }}</td>
+                <td padding="5px">{{ 'Units Price' | trans({},'Sale') }}</td>
+                <td padding="5px">{{ 'Total' | trans({},'Sale') }}</td>
+            </tr>
+            {% for item in sale.saleItems %}
+                <tr>
+                    <td padding="5px">{{ item.product }}</td>
+                    <td padding="5px">{{ item.unitPrice }}</td>
+                    <td padding="5px">{{ item.units }}</td>
+                    <td padding="5px">{{ item.total }}</td>
+                </tr>
+            {% endfor %}
+            <tr >
+                <td padding="5px"></td>
+                <td padding="5px"></td>
+                <td padding="5px" background.color="lightgray">{{ 'Total' | trans({},'Sale') }}</td>
+                <td padding="5px">{{sale.total}}</td>
+            </tr>
+            <tr>
+                <td padding="5px"></td>
+                <td padding="5px"></td>
+                <td padding="5px" background.color="lightgray">{{ 'Tax' | trans({},'Sale') }}</td>
+                <td padding="5px">{{sale.tax}}</td>
+            </tr>
+            <tr >
+                <td padding="5px"></td>
+                <td padding="5px"></td>
+                <td padding="5px" background.color="lightgray">{{ 'Totalwithtax' | trans({},'Sale') }}</td>
+                <td padding="5px">{{sale.totalWithTax}}</td>
+            </tr>
+    </table>
+    <h2>Observaciones</h2>
+    <p>
+    	{{sale.observations}}
+    </p>
+    Fecha:{{sale.created | date("smallDate" | trans)}}
+    </dynamic-page>
+</pdf>
