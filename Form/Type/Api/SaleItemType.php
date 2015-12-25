@@ -15,9 +15,12 @@ class SaleItemType extends AbstractType
     {
         $builder
             ->add('units')
-            ->add('unitPrice')
+            ->add('unit_price',null,array(
+                'property_path' => 'unitPrice'))
             ->add("product", 'entity', array(
                                 'class' => 'Flower\ModelBundle\Entity\Stock\Product'))
+            ->add("service", 'entity', array(
+                                'class' => 'Flower\ModelBundle\Entity\Stock\Service'))
             ->add('total');
     }
 

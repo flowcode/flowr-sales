@@ -4,6 +4,8 @@ namespace Flower\SalesBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Groups;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 /**
  * SaleItem
  */
@@ -36,10 +38,16 @@ class SaleItem
     protected $unitPrice;
     /**
      * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Stock\Product", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="product", referencedColumnName="id")
+     * @ORM\JoinColumn(name="product", referencedColumnName="id", nullable=true)
      * @Groups({"public_api"})
      */
     protected $product;
+    /**
+     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Stock\Service", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="service", referencedColumnName="id", nullable=true)
+     * @Groups({"public_api"})
+     */
+    protected $service;
     /**
      * @var float
      *
@@ -165,8 +173,28 @@ class SaleItem
         return $this->sale;
     }
 
+    /**
+     * Set service
+     *
+     * @param \Flower\ModelBundle\Entity\Stock\service $service
+     * @return SaleItem
+     */
+    public function setService(\Flower\ModelBundle\Entity\Stock\service $service = null)
+    {
+        $this->service = $service;
 
+        return $this;
+    }
 
+    /**
+     * Get service
+     *
+     * @return \Flower\ModelBundle\Entity\Stock\service 
+     */
+    public function getService()
+    {
+        return $this->service;
+    }
     /**
      * Set product
      *

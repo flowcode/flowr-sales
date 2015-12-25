@@ -14,6 +14,9 @@ class Sale
 {
     const CIRCUIT_ONE = 1;
     const CIRCUIT_TWO = 2;
+
+    const DISCOUNT_PORCENTAJE = 1;
+    const DISCOUNT_NUMBER = 2;
     /**
      * @var integer
      *
@@ -46,6 +49,29 @@ class Sale
      * @Groups({"public_api"})
      */
     protected $totalWithTax;
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="discount", type="float")
+     * @Groups({"public_api"})
+     */
+    protected $discount;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="totalDiscount", type="float")
+     * @Groups({"public_api"})
+     */
+    protected $totalDiscount;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="discountType", type="integer")
+     * @Groups({"public_api"})
+     */
+    protected $discountType;
 
     /**
      * @var float
@@ -94,7 +120,14 @@ class Sale
      * @Groups({"public_api"})
      */
     protected $paymentmethod;
-    
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="paymentObservations", type="text", nullable=true)
+     * @Groups({"public_api"})
+     */
+    protected $paymentObservations;
+
     /**
      * @var DateTime
      *
@@ -183,6 +216,75 @@ class Sale
     }
 
     /**
+     * Set discount
+     *
+     * @param float $discount
+     * @return Sale
+     */
+    public function setDiscount($discount)
+    {
+        $this->discount = $discount;
+
+        return $this;
+    }
+
+    /**
+     * Get discount
+     *
+     * @return float 
+     */
+    public function getDiscount()
+    {
+        return $this->discount;
+    }
+
+    /**
+     * Set totalDiscount
+     *
+     * @param float $totalDiscount
+     * @return Sale
+     */
+    public function setTotalDiscount($totalDiscount)
+    {
+        $this->totalDiscount = $totalDiscount;
+
+        return $this;
+    }
+
+    /**
+     * Get totalDiscount
+     *
+     * @return float 
+     */
+    public function getTotalDiscount()
+    {
+        return $this->totalDiscount;
+    }
+
+
+    /**
+     * Set discountType
+     *
+     * @param integer $discountType
+     * @return SaleItem
+     */
+    public function setDiscountType($discountType)
+    {
+        $this->discountType = $discountType;
+
+        return $this;
+    }
+
+    /**
+     * Get discountType
+     *
+     * @return integer 
+     */
+    public function getDiscountType()
+    {
+        return $this->discountType;
+    }
+    /**
      * Set totalWithTax
      *
      * @param float $totalWithTax
@@ -249,6 +351,29 @@ class Sale
     public function getObservations()
     {
         return $this->observations;
+    }
+
+    /**
+     * Set paymentObservations
+     *
+     * @param string $paymentObservations
+     * @return Sale
+     */
+    public function setPaymentObservations($paymentObservations)
+    {
+        $this->paymentObservations = $paymentObservations;
+
+        return $this;
+    }
+
+    /**
+     * Get paymentObservations
+     *
+     * @return string 
+     */
+    public function getPaymentObservations()
+    {
+        return $this->paymentObservations;
     }
 
     /**
