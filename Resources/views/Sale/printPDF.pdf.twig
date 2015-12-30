@@ -1,9 +1,48 @@
 <pdf>
     <dynamic-page>
-        <h1>ORDEN DE PEDIDO</h1>
-	<h3>Datos de la empresa</h3>
+    <table>
+        <tr>
+            <td border.type="none" width="250px" font-size="10px">
+                <img padding-left="30px" height="100px" src="{{ pdf_image('FlowerCoreBundle:smart-logo-text.jpg') }}" />
+                <p text-align="center" padding="0px"  >
+                    SmartDrink S.A
+                </p>
+                <p text-align="center" padding="0px"  >
+                    Av. Libertador 5579 Piso 14 Of "c" C.P 1426
+                </p>
+                <p text-align="center" padding="0px"  >
+                    Ciudad Autónoma de Buenos Aires
+                </p>
+                <p text-align="center" padding="0px"  >
+                    www.smartdrink.com.ar - contacto@smartdrink.com.ar
+                </p>
+                <p text-align="center" padding="0px"  >
+                    Tel.:+54 39699064
+                </p>
+                <p text-align="center" padding="0px" padding-bottom="20px"  >
+                    Responsable Inscripto
+                </p>
+
+            </td>
+            <td border.type="none"></td>
+            <td border.type="none">
+                <h1 text-align="left" padding="0px">ORDEN DE PEDIDO</h1>
+                <p text-align="left" padding="0px" font-size="10px">DOCUMENTO NO VALIDO COMO FACTURA</p>
+                <h3  padding="0px" text-align="left">FECHA: {{sale.created | date("smallDate"| trans)}}</h3>
+                <p text-align="left" padding="0px">C.U.I.T: 20-7-1427118-7</p>
+                <p text-align="left" padding="0px">Ingr. Brutos: CM 901-613536-7</p>
+                <p text-align="left" padding="0px">Fecha de inicio: 11/2013</p>
+            </td>
+        </tr>
+    </table>
+        
+        
     <table class="table table-striped table-hover table-bordered records_list">
-            <tr>
+            <tr >
+                <td background.color="black" color="white" padding="5px">{{'Company data' | trans({},'Sale') | upper }}</td>
+                <td  border.type="none"></td>
+            </tr>
+            <tr >
                 <td padding="5px">{{ 'name' | trans({},'Sale') }}</td>
                 <td padding="5px">{{sale.account.name}}</td>
             </tr>
@@ -20,8 +59,12 @@
                 <td padding="5px">{{sale.account.cuit}}</td>
             </tr>
     </table>
-    <h3>Información de contacto</h3>
+    <h3></h3>
         <table class="table table-striped table-hover table-bordered records_list">
+            <tr>
+                <td background.color="black" color="white" padding="5px">{{'Contact Information' | trans({},'Sale') | upper}}</td>
+                <td border.type="none"></td>
+            </tr>
             <tr>
                 <td padding="5px">{{ 'Name' | trans({},'Sale') }}</td>
                 <td padding="5px">{{sale.contact.happyName}}</td>
@@ -35,8 +78,13 @@
                 <td padding="5px">{{sale.contact.email}}</td>
             </tr>
     </table>
-<h3>Descripción</h3>
+<h3></h3>
         <table class="table table-striped table-hover table-bordered records_list">
+
+            <tr>
+                <td background.color="black" color="white" padding="5px">{{'Description' | trans({},'Sale') | upper}}</td>
+                <td border.type="none"></td>
+            </tr>
             <tr background.color="lightgray">
                 <td padding="5px">{{ 'Product' | trans({},'Sale') }}</td>
                 <td padding="5px">{{ 'Units' | trans({},'Sale') }}</td>
@@ -70,9 +118,35 @@
                 <td padding="5px">{{sale.totalWithTax}}</td>
             </tr>
     </table>
+    <h2>
+        Forma depago
+    </h2>
+    <div>
+        <table width="300px">
+            <tr>
+                {% for paymentMethod in paymentMethods %}
+                    <td border.type="none" width="15px">
+                        {% if paymentMethod.id == sale.paymentmethod.id %}
+                            <img width="10px"  float='left' src="{{ pdf_image('FlowerCoreBundle:assets/checked.jpg') }}" />
+                        {% else %}
+                            <img width="10px"  float='left' src="{{ pdf_image('FlowerCoreBundle:assets/not-checked.jpg') }}" />
+                        {% endif %}        
+                    </td>
+                    <td border.type="none">
+                        {{paymentMethod.name}}
+                    </td>
+                {% endfor %}
+            </tr>
+        </table>
+        <p>
+            {{sale.paymentObservations}}
+        </p>
+
+
+    </div>
     <h2>Observaciones</h2>
     <p>
-    	{{sale.observations}}
+        {{sale.observations}}
     </p>
     Fecha:{{sale.created | date("smallDate" | trans)}}
     </dynamic-page>

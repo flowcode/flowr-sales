@@ -144,8 +144,11 @@ class SaleController extends BaseController
     */
         public function printPDFAction(Sale $sale)
         {
+            $em = $this->getDoctrine()->getManager();
+            $paymentMethods = $em->getRepository('FlowerModelBundle:Sales\PaymentMethod')->findAll();
             return array(
             'sale' => $sale,
+            'paymentMethods' => $paymentMethods,
             );
         }
 }

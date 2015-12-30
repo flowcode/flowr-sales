@@ -9,10 +9,9 @@ Delete: Borrar
 Edit: Editar
 Name: Nombre
 'No': 'No'
-SaleStatus: Estado de venta
+SaleStatus: 'Estado de venta'
 'SaleStatus list': 'Lista de estados de ventas'
-Salemodificable: Venta modificable
-'Yes': 'Si'
+Salemodificable: 'Venta modificable'
+'Yes': Si
 'You are about to delete an item': 'Usted esta por borrar un elemento'
 'this procedure is irreversible': 'esta acción sera irreversible'
-'salesstatus': Estado de ventas

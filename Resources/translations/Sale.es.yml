@@ -1,12 +1,24 @@
+'%entity%': 'Pedido'
 '%entity% creation': 'Creación de Pedido'
-'%entity% edit': 'Edición de Pedido'
+'%entity% list': Pedidos
+'All %entity%': 'Todos los pedidos'
+CUIT: CUIT
 'Create a new %entity%': 'Crear Pedido'
-'%entity% list': 'Pedidos'
-Account: Cuenta
-Date: Fecha
-Totalwithtax: Total con Impuesto
-Tax: Impuesto
-Observations: Observaciones
-Created: Creado
-Updated: Actualizado
+'Company data': 'Datos de la empresa'
+Description: Descripción
+'Contact Information': 'Información de contacto'
+Name: Nombre
+Product: Producto
 Status: Estado
+Tax: Impuesto
+'This %entity%': 'Este pedido'
+Total: Total
+Totalwithtax: 'Total con Impuesto'
+Units: Unidades
+'Units Price': 'Precio por unidad'
+activity: actividad
+businessName: Razón social
+email: email
+name: nombre
+phone: teléfono
+print: imprimir

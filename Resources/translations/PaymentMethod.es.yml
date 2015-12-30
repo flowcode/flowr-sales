@@ -9,8 +9,8 @@ Delete: Borrar
 Edit: Editar
 Name: Nombre
 'No': 'No'
-PaymentMethod: Forma de pago
+PaymentMethod: 'Forma de pago'
 'PaymentMethod list': 'Lista de formas de pago'
-'Yes': 'Si'
+'Yes': Si
 'You are about to delete an item': 'Usted esta por borrar un elemento'
 'this procedure is irreversible': 'esta acción sera irreversible'
