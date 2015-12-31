@@ -52,7 +52,7 @@ class Sale
     /**
      * @var float
      *
-     * @ORM\Column(name="discount", type="float")
+     * @ORM\Column(name="discount", type="float", nullable=true)
      * @Groups({"public_api"})
      */
     protected $discount;
@@ -60,7 +60,7 @@ class Sale
     /**
      * @var float
      *
-     * @ORM\Column(name="totalDiscount", type="float")
+     * @ORM\Column(name="totalDiscount", type="float", nullable=true)
      * @Groups({"public_api"})
      */
     protected $totalDiscount;
@@ -68,7 +68,7 @@ class Sale
     /**
      * @var integer
      *
-     * @ORM\Column(name="discountType", type="integer")
+     * @ORM\Column(name="discountType", type="integer", nullable=true)
      * @Groups({"public_api"})
      */
     protected $discountType;

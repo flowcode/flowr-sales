@@ -22,3 +22,10 @@ email: email
 name: nombre
 phone: teléfono
 print: imprimir
+Shipping information: Información de entrega
+street: calle
+streetNumber: número
+department: departamento
+locality: localidad
+zipCode: código postal
+city: ciudad
