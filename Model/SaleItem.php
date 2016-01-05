@@ -37,13 +37,13 @@ class SaleItem
      */
     protected $unitPrice;
     /**
-     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Stock\Product", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Stock\Product", cascade={"persist"})
      * @ORM\JoinColumn(name="product", referencedColumnName="id", nullable=true)
      * @Groups({"public_api"})
      */
     protected $product;
     /**
-     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Stock\Service", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Stock\Service", cascade={"persist"})
      * @ORM\JoinColumn(name="service", referencedColumnName="id", nullable=true)
      * @Groups({"public_api"})
      */
@@ -57,7 +57,7 @@ class SaleItem
     protected $total;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Sales\Sale", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Sales\Sale", cascade={"persist"})
      * @ORM\JoinColumn(name="sale", referencedColumnName="id")
      */
     protected $sale;
