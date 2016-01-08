@@ -13,6 +13,11 @@ flower_api_sales_status_findall:
     defaults: { _controller: FlowerSalesBundle:Api\SaleStatus:getAll }
     methods: [GET]
 
+flower_api_sales_category_findall:
+    path:     /salecategory
+    defaults: { _controller: FlowerSalesBundle:Api\SaleCategory:getAll }
+    methods: [GET]
+
 flower_api_sales_sale_item_show:
     path:     /saleitem/{id}
     defaults: { _controller: FlowerSalesBundle:Api\SaleItem:getById }

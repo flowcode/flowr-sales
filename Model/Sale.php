@@ -52,7 +52,7 @@ class Sale
     /**
      * @var float
      *
-     * @ORM\Column(name="discount", type="float")
+     * @ORM\Column(name="discount", type="float", nullable=true)
      * @Groups({"public_api"})
      */
     protected $discount;
@@ -60,7 +60,7 @@ class Sale
     /**
      * @var float
      *
-     * @ORM\Column(name="totalDiscount", type="float")
+     * @ORM\Column(name="totalDiscount", type="float", nullable=true)
      * @Groups({"public_api"})
      */
     protected $totalDiscount;
@@ -68,7 +68,7 @@ class Sale
     /**
      * @var integer
      *
-     * @ORM\Column(name="discountType", type="integer")
+     * @ORM\Column(name="discountType", type="integer", nullable=true)
      * @Groups({"public_api"})
      */
     protected $discountType;
@@ -96,6 +96,13 @@ class Sale
      */
     protected $contact;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Sales\SaleCategory")
+     * @ORM\JoinColumn(name="category", referencedColumnName="id")
+     * @Groups({"public_api"})
+     */
+    protected $category;
+    
     /**
      * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Clients\Account")
      * @ORM\JoinColumn(name="account", referencedColumnName="id")
@@ -601,5 +608,28 @@ class Sale
     public function getCircuit()
     {
         return $this->circuit;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \Flower\ModelBundle\Entity\Sales\SaleCategory $category
+     * @return Sale
+     */
+    public function setCategory(\Flower\ModelBundle\Entity\Sales\SaleCategory $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \Flower\ModelBundle\Entity\Sales\SaleCategory 
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

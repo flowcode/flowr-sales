@@ -1,46 +1,78 @@
 <pdf>
     <dynamic-page>
+    <table>
+        <tr>
+            <td border.type="none" width="250px" font-size="10px">
+                <img padding-left="30px" height="100px" src="{{ pdf_image('FlowerCoreBundle:smart-logo-text.jpg') }}" />
+                <p text-align="center" padding="0px"  >
+                    Flower Flowcode
+                </p>
+                <p text-align="center" padding="0px"  >
+                    Lavalle 910 2-E
+                </p>
+                <p text-align="center" padding="0px"  >
+                    Ciudad Autónoma de Buenos Aires
+                </p>
+                <p text-align="center" padding="0px"  >
+                    myflowr.com - contacto@myflowr.com
+                </p>
+                <p text-align="center" padding="0px"  >
+                    Tel.:+54 123123
+                </p>
+                <p text-align="center" padding="0px" padding-bottom="20px"  >
+                    Responsable Inscripto
+                </p>
 
-        <h1 text-align="right">ORDEN DE PEDIDO</h1>
-	
+            </td>
+            <td border.type="none"></td>
+            <td border.type="none">
+                <h1 text-align="left" padding="0px">ORDEN DE PEDIDO</h1>
+                <p text-align="left" padding="0px" font-size="10px">DOCUMENTO NO VALIDO COMO FACTURA</p>
+                <h3  padding="0px" text-align="left">FECHA: {{sale.created | date("smallDate"| trans)}}</h3>
+                <p text-align="left" padding="0px">Fecha de inicio: 11/2013</p>
+            </td>
+        </tr>
+    </table>
+        
+        
     <table class="table table-striped table-hover table-bordered records_list">
             <tr >
-                <td background.color="black" color="white" padding="5px">{{'Datos de la empresa' | trans({},'Sale') | upper }}</td>
+                <td background.color="black" color="white" padding="5px">{{'Company data' | trans({},'Sale') | upper }}</td>
                 <td  border.type="none"></td>
             </tr>
             <tr >
-                <td padding="5px">{{ 'name' | trans({},'Sale') }}</td>
+                <td padding="5px">{{ 'name' | trans({},'Sale') | capitalize}}</td>
                 <td padding="5px">{{sale.account.name}}</td>
             </tr>
             <tr>
-                <td padding="5px">{{ 'businessName' | trans({},'Sale') }}</td>
+                <td padding="5px">{{ 'businessName' | trans({},'Sale') | capitalize}}</td>
                 <td padding="5px">{{sale.account.businessName}}</td>
             </tr>
             <tr>
-                <td padding="5px">{{ 'activity' | trans({},'Sale') }}</td>
+                <td padding="5px">{{ 'activity' | trans({},'Sale') | capitalize}}</td>
                 <td padding="5px">{{sale.account.activity}}</td>
             </tr>
             <tr>
-                <td padding="5px">{{ 'CUIT' | trans({},'Sale') }}</td>
+                <td padding="5px">{{ 'CUIT' | trans({},'Sale')| capitalize }}</td>
                 <td padding="5px">{{sale.account.cuit}}</td>
             </tr>
     </table>
     <h3></h3>
         <table class="table table-striped table-hover table-bordered records_list">
             <tr>
-                <td background.color="black" color="white" padding="5px">{{'Información de contacto' | trans({},'Sale') | upper}}</td>
+                <td background.color="black" color="white" padding="5px">{{'Contact Information' | trans({},'Sale') | upper}}</td>
                 <td border.type="none"></td>
             </tr>
             <tr>
-                <td padding="5px">{{ 'Name' | trans({},'Sale') }}</td>
+                <td padding="5px">{{ 'name' | trans({},'Sale') | capitalize}}</td>
                 <td padding="5px">{{sale.contact.happyName}}</td>
             </tr>
             <tr>
-                <td padding="5px">{{ 'phone' | trans({},'Sale') }}</td>
+                <td padding="5px">{{ 'phone' | trans({},'Sale') | capitalize}}</td>
                 <td padding="5px">{{sale.contact.phone}}</td>
             </tr>
             <tr>
-                <td padding="5px">{{ 'email' | trans({},'Sale') }}</td>
+                <td padding="5px">{{ 'email' | trans({},'Sale') | capitalize}}</td>
                 <td padding="5px">{{sale.contact.email}}</td>
             </tr>
     </table>
@@ -48,8 +80,7 @@
         <table class="table table-striped table-hover table-bordered records_list">
 
             <tr>
-                <td background.color="black" color="white" padding="5px">{{'Descripción' | trans({},'Sale') | upper}}</td>
-                <td border.type="none"></td>
+                <td background.color="black" color="white"  colspan="2" padding="5px">{{'Description' | trans({},'Sale') | upper}}</td>
             </tr>
             <tr background.color="lightgray">
                 <td padding="5px">{{ 'Product' | trans({},'Sale') }}</td>
@@ -90,31 +121,28 @@
     <div>
         <table width="300px">
             <tr>
-                <td border.type="none" width="15px">
-                    <img width="10px"  float='left' src="{{ pdf_image('FlowerCoreBundle:assets/not-checked.jpg') }}" />
-                </td>
-                <td border.type="none">
-                    Transferencia
-                </td>
-                <td border.type="none" width="15px">
-                    <img width="10px"  float='left' src="{{ pdf_image('FlowerCoreBundle:assets/checked.jpg') }}" />
-                </td>
-                <td border.type="none">
-                    Efectivo
-                </td>
-                <td border.type="none" width="15px">
-                    <img width="10px"  float='left' src="{{ pdf_image('FlowerCoreBundle:assets/not-checked.jpg') }}" />
-                </td>
-                <td border.type="none">
-                    Cheque
-                </td>
+                {% for paymentMethod in paymentMethods %}
+                    <td border.type="none" width="15px">
+                        {% if paymentMethod.id == sale.paymentmethod.id %}
+                            <img width="10px"  float='left' src="{{ pdf_image('FlowerCoreBundle:assets/checked.jpg') }}" />
+                        {% else %}
+                            <img width="10px"  float='left' src="{{ pdf_image('FlowerCoreBundle:assets/not-checked.jpg') }}" />
+                        {% endif %}        
+                    </td>
+                    <td border.type="none">
+                        {{paymentMethod.name}}
+                    </td>
+                {% endfor %}
             </tr>
         </table>
+        <p>
+            {{sale.paymentObservations}}
+        </p>
 
     </div>
     <h2>Observaciones</h2>
     <p>
-    	{{sale.observations}}
+        {{sale.observations}}
     </p>
     Fecha:{{sale.created | date("smallDate" | trans)}}
     </dynamic-page>

@@ -20,11 +20,14 @@ class SaleType extends AbstractType
                 'property_path' => 'totalWithTax'))
             ->add('tax')
             ->add('circuit')
-            ->add('discount')
+            ->add('discount',null,array(
+                'required' => false))
             ->add('discount_type',null,array(
-                'property_path' => 'discountType'))
+                'property_path' => 'discountType',
+                'required' => false))
             ->add('total_discount',null,array(
-                'property_path' => 'totalDiscount'))
+                'property_path' => 'totalDiscount',
+                'required' => false))
             ->add('account', 'entity', array(
                                 'class' => 'Flower\ModelBundle\Entity\Clients\Account'))
             ->add('contact', 'entity', array(

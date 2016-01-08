@@ -1,0 +1,16 @@
+'%entity% List': 'Lista de categorías de pedidos'
+'%entity% creation': 'Creación de Categoría de pedido'
+'%entity% edit': 'Editar categoría de pedido'
+'%entity% list': 'Lista de categorías de pedidos'
+'Confirm delete': 'Confirmar borrado'
+'Create a new %entity%': 'Crear nueva categoría de pedido'
+Delete: Borrar
+'Do you want to proceed?': '¿Desea continuar de todos modos?'
+Edit: Editar
+Name: Nombre
+'No': 'No'
+SaleCategory: Categoría de pedido
+'SaleCategory list': 'lista de categorías de pedidos'
+'Yes': 'Si'
+'You are about to delete an item': 'Usted esta por borrar un elemento'
+'this procedure is irreversible': 'esta acción sera irreversible'

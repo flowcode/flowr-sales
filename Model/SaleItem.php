@@ -57,7 +57,7 @@ class SaleItem
     protected $total;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Sales\Sale", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Sales\Sale", cascade={"persist"})
      * @ORM\JoinColumn(name="sale", referencedColumnName="id")
      */
     protected $sale;
