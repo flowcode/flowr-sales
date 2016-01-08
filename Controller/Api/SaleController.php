@@ -27,7 +27,7 @@ class SaleController extends FOSRestController
         $form->submit($request);
         if ($form->isValid()) {
             foreach ($sale->getSaleItems() as $item) {
-                if(!$item->getProduct() || $item->getUnits() == 0 ){
+                if((!$item->getProduct() && !$item->getService()) || $item->getUnits() == 0 ){
                     $sale->removeSaleItem($item);
                     $item->setSale(null);
                     $em->remove($item);

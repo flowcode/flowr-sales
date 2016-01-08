@@ -1,9 +1,14 @@
 <pdf>
     <dynamic-page>
-        <h1>ORDEN DE PEDIDO</h1>
-	<h3>Datos de la empresa</h3>
+
+        <h1 text-align="right">ORDEN DE PEDIDO</h1>
+	
     <table class="table table-striped table-hover table-bordered records_list">
-            <tr>
+            <tr >
+                <td background.color="black" color="white" padding="5px">{{'Datos de la empresa' | trans({},'Sale') | upper }}</td>
+                <td  border.type="none"></td>
+            </tr>
+            <tr >
                 <td padding="5px">{{ 'name' | trans({},'Sale') }}</td>
                 <td padding="5px">{{sale.account.name}}</td>
             </tr>
@@ -20,8 +25,12 @@
                 <td padding="5px">{{sale.account.cuit}}</td>
             </tr>
     </table>
-    <h3>Información de contacto</h3>
+    <h3></h3>
         <table class="table table-striped table-hover table-bordered records_list">
+            <tr>
+                <td background.color="black" color="white" padding="5px">{{'Información de contacto' | trans({},'Sale') | upper}}</td>
+                <td border.type="none"></td>
+            </tr>
             <tr>
                 <td padding="5px">{{ 'Name' | trans({},'Sale') }}</td>
                 <td padding="5px">{{sale.contact.happyName}}</td>
@@ -35,8 +44,13 @@
                 <td padding="5px">{{sale.contact.email}}</td>
             </tr>
     </table>
-<h3>Descripción</h3>
+<h3></h3>
         <table class="table table-striped table-hover table-bordered records_list">
+
+            <tr>
+                <td background.color="black" color="white" padding="5px">{{'Descripción' | trans({},'Sale') | upper}}</td>
+                <td border.type="none"></td>
+            </tr>
             <tr background.color="lightgray">
                 <td padding="5px">{{ 'Product' | trans({},'Sale') }}</td>
                 <td padding="5px">{{ 'Units' | trans({},'Sale') }}</td>
@@ -70,6 +84,34 @@
                 <td padding="5px">{{sale.totalWithTax}}</td>
             </tr>
     </table>
+    <h2>
+        Forma depago
+    </h2>
+    <div>
+        <table width="300px">
+            <tr>
+                <td border.type="none" width="15px">
+                    <img width="10px"  float='left' src="{{ pdf_image('FlowerCoreBundle:assets/not-checked.jpg') }}" />
+                </td>
+                <td border.type="none">
+                    Transferencia
+                </td>
+                <td border.type="none" width="15px">
+                    <img width="10px"  float='left' src="{{ pdf_image('FlowerCoreBundle:assets/checked.jpg') }}" />
+                </td>
+                <td border.type="none">
+                    Efectivo
+                </td>
+                <td border.type="none" width="15px">
+                    <img width="10px"  float='left' src="{{ pdf_image('FlowerCoreBundle:assets/not-checked.jpg') }}" />
+                </td>
+                <td border.type="none">
+                    Cheque
+                </td>
+            </tr>
+        </table>
+
+    </div>
     <h2>Observaciones</h2>
     <p>
     	{{sale.observations}}
