@@ -21,7 +21,7 @@ businessName: Razón social
 email: email
 name: nombre
 phone: teléfono
-print: imprimir
+Print: Imprimir
 Shipping information: Información de entrega
 street: calle
 streetNumber: número
@@ -30,3 +30,5 @@ locality: localidad
 zipCode: código postal
 city: ciudad
 Discount: Descuento
+Created: Creado
+Updated: Actualizado

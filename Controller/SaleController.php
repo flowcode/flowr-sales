@@ -31,8 +31,13 @@ class SaleController extends BaseController
         $qb = $em->getRepository('FlowerModelBundle:Sales\Sale')->createQueryBuilder('s');
         $qb->leftJoin("s.account","a");
         $qb->leftJoin("s.status","es");
-
-        $filters = array('accountFilter' => "a.id", 'ownerFilter' => 's.owner', 'statusFilter' => 'es.id');
+        $translator = $this->get('translator');
+        $dateformat = $translator->trans('fullDateTime');
+        $filters = array('accountFilter' => "a.id",
+                         'ownerFilter' => 's.owner',
+                         'statusFilter' => 'es.id',
+                         'startDateFilter' => array("field"=> "s.created", "type" => "date", "format" => $dateformat, "operation" => ">"),
+                         'endDateFilter' => array("field"=> "s.created", "type" => "date","format" => $dateformat , "operation" => "<="));
 
         if($request->query->has('reset')) {
             $request->getSession()->set('filter.sale', null);
@@ -57,8 +62,9 @@ class SaleController extends BaseController
         if(!$statusFilter && $filters['statusFilter'] && $filters['statusFilter']["value"]){
             $statusFilter = $filters['statusFilter']["value"];
         }    
-        
         return array(
+            'startDateFilter' => isset($filters['startDateFilter'])?$filters['startDateFilter']["value"] : null,
+            'endDateFilter' => isset($filters['endDateFilter'])?$filters['endDateFilter']["value"] : null,
             'users' => $users,
             'statuses' => $status,
             'ownerFilter' => $ownerFilter,
