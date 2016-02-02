@@ -28,9 +28,16 @@ class SaleController extends BaseController
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $qb = $em->getRepository('FlowerModelBundle:Sales\Sale')->createQueryBuilder('s');
-        $qb->leftJoin("s.account","a");
+        $saleAlias = "s";
+        $accountAlias = "a";
+        $qb = $em->getRepository('FlowerModelBundle:Sales\Sale')->createQueryBuilder($saleAlias);
+        $qb->leftJoin("s.account",$accountAlias);
         $qb->leftJoin("s.status","es");
+        /* filter by org security groups */
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            $secGroupSrv = $this->get('user.service.securitygroup');
+            $qb = $secGroupSrv->addSecurityGroupFilter($qb, $this->getUser(), $accountAlias);
+        }
         $translator = $this->get('translator');
         $dateformat = $translator->trans('fullDateTime');
         $filters = array('accountFilter' => "a.id",
@@ -46,7 +53,10 @@ class SaleController extends BaseController
 
         $this->saveFilters($request, $filters, 'sale','sale');
         $paginator = $this->filter($qb,'sale',$request);
-        $accounts = $em->getRepository('FlowerModelBundle:Clients\Account')->findAll();
+
+
+        $accounts = $this->get("client.service.account")->findAll();
+
         $status = $em->getRepository('FlowerModelBundle:Sales\SaleStatus')->findAll();
         $users = $em->getRepository('FlowerModelBundle:User\User')->findAll();
         $accountFilter = $request->query->get("accountFilter");
