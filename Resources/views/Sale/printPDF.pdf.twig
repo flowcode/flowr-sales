@@ -3,9 +3,9 @@
     <table>
         <tr>
             <td border.type="none" width="250px" font-size="10px">
-                <img padding-left="30px" height="100px" src="{{ pdf_image('FlowerCoreBundle:smart-logo-text.jpg') }}" />
+                <img padding-left="30px" height="100px" src="{{ kernelRootDir }}/../web{{ organization_settings.getValue('logo') }}" />
                 <p text-align="center" padding="0px"  >
-                    Flower Flowcode
+                    {{ organization_settings.getValue('organization_title') }}
                 </p>
                 <p text-align="center" padding="0px"  >
                     Lavalle 910 2-E

@@ -1,9 +1,9 @@
-'%entity%': 'Pedido'
-'%entity% creation': 'Creación de Pedido'
-'%entity% list': Pedidos
-'All %entity%': 'Todos los pedidos'
+'%entity%': 'Venta'
+'%entity% creation': 'Nueva Venta'
+'%entity% list': 'Ventas'
+'All %entity%': 'Todos las ventas'
 CUIT: CUIT
-'Create a new %entity%': 'Crear Pedido'
+'Create a new %entity%': 'Crear Venta'
 'Company data': 'Datos de la empresa'
 Description: Descripción
 'Contact Information': 'Información de contacto'
@@ -11,7 +11,7 @@ Name: Nombre
 Product: Producto
 Status: Estado
 Tax: Impuesto
-'This %entity%': 'Este pedido'
+'This %entity%': 'Esta venta'
 Total: Total
 Totalwithtax: 'Total con Impuesto'
 Units: Unidades
