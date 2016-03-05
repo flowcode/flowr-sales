@@ -22,10 +22,17 @@
 {% from _self import thead %}
 
 
-{% block body %}
+{% block app_menu %}
+    {{ include("FlowerSalesBundle::appnav.html.twig", { 'app_sale': true }) }}
+{% endblock %}
 
+{% block body %}
+    <section class="content-header">
+        <h1>
+
+        </h1>
+    </section>
     <section class="content">
-        {{ include("FlowerSalesBundle::appnav.html.twig", { 'app_sale': true }) }}
         <div class="box">
             <div class="box-header">
                 <div class="box-tools pull-right">

@@ -2,10 +2,15 @@
 
 {% block title %}{{ '%entity% creation'|trans({'%entity%': 'Sale'}, 'Sale') }} - {{ parent() }}{% endblock %}
 
+{% block app_menu %}
+    {{ include("FlowerSalesBundle::appnav.html.twig", { 'app_sale': true }) }}
+{% endblock %}
+
 {% block body %}
     <section class="content-header">
+        <h1></h1>
+    </section>
     <section class="content">
-        {{ include("FlowerSalesBundle::appnav.html.twig", { 'app_sale': true }) }}
         <div class="box" multi-app="flowerSales">
             <toaster-container ></toaster-container>
             <div class="box-body" ng-view>

@@ -2,9 +2,12 @@
 
 {% block title %}{{ '%entity% edit'|trans({'%entity%': 'PaymentMethod'}, 'PaymentMethod') }} - {{ parent() }}{% endblock %}
 
+{% block app_menu %}
+    {{ include("FlowerCoreBundle:Default:admin_nav.html.twig") }}
+{% endblock %}
+
 {% block body %}
     <section class="content-header">
-        {% include 'FlowerCoreBundle:Default:admin_nav.html.twig' %}
         <h1>
             <a href="{{ path('paymentmethod') }}"> {{ '%entity% list'|trans({'%entity%': 'PaymentMethod'}, 'PaymentMethod') }}</a>
             /
