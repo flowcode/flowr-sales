@@ -2,6 +2,7 @@
     <dynamic-page>
     <table>
         <tr>
+            {% if sale.circuit == 1 %}
             <td border.type="none" width="250px" font-size="10px">
                 <img padding-left="30px" height="100px" src="{{ kernelRootDir }}/../web{{ organization_settings.getValue('logo') }}" />
                 <p text-align="center" padding="0px"  >
@@ -24,12 +25,17 @@
                 </p>
 
             </td>
+            {% endif %}
             <td border.type="none"></td>
             <td border.type="none">
                 <h1 text-align="left" padding="0px">ORDEN DE PEDIDO</h1>
                 <p text-align="left" padding="0px" font-size="10px">DOCUMENTO NO VALIDO COMO FACTURA</p>
                 <h3  padding="0px" text-align="left">FECHA: {{sale.created | date("smallDate"| trans)}}</h3>
-                <p text-align="left" padding="0px">Fecha de inicio: 11/2013</p>
+                {% if sale.circuit == 1 %}
+                    <p text-align="left" padding="0px">C.U.I.T: 20-123123123-7</p>
+                    <p text-align="left" padding="0px">Ingr. Brutos: CM 111-222222-3</p>
+                    <p text-align="left" padding="0px">Fecha de inicio: 11/2011</p>
+                {% endif %}
             </td>
         </tr>
     </table>
@@ -90,24 +96,51 @@
             </tr>
             {% for item in sale.saleItems %}
                 <tr>
-                    <td padding="5px">{{ item.product }}</td>
+                    <td padding="5px">
+                        {% if item.product %}
+                        {{ item.product }}
+                        {% else %}
+                        {{ item.service }}
+                        {% endif %}
+                    </td>
                     <td padding="5px">{{ item.units }}</td>
                     <td padding="5px">{{ item.unitPrice }}</td>
                     <td padding="5px">{{ item.total }}</td>
                 </tr>
             {% endfor %}
+            {% if sale.discount %}
+                <tr >
+                    <td padding="5px">
+                    </td>
+                    <td padding="5px">
+                    </td>
+                    <td padding="5px" background.color="lightgray">
+                        {{ 'Discount' | trans({},'Sale') }}
+                        (
+                        {% if sale.discountType == 1 %}
+                            %
+                        {% else %}
+                            -$        
+                        {% endif %}
+                        {{sale.discount}})
+                    </td>
+                    <td padding="5px">{{sale.totalDiscount}}</td>
+                </tr>    
+            {% endif %}
             <tr >
                 <td padding="5px"></td>
                 <td padding="5px"></td>
                 <td padding="5px" background.color="lightgray">{{ 'Total' | trans({},'Sale') }}</td>
                 <td padding="5px">{{sale.total}}</td>
             </tr>
-            <tr>
-                <td padding="5px"></td>
-                <td padding="5px"></td>
-                <td padding="5px" background.color="lightgray">{{ 'Tax' | trans({},'Sale') }}</td>
-                <td padding="5px">{{sale.tax}}</td>
-            </tr>
+            {% if sale.circuit == 1 %}
+                <tr>
+                    <td padding="5px"></td>
+                    <td padding="5px"></td>
+                    <td padding="5px" background.color="lightgray">{{ 'Tax' | trans({},'Sale') }}</td>
+                    <td padding="5px">{{sale.tax}}</td>
+                </tr>
+            {% endif %}
             <tr >
                 <td padding="5px"></td>
                 <td padding="5px"></td>
@@ -138,6 +171,7 @@
         <p>
             {{sale.paymentObservations}}
         </p>
+
 
     </div>
     <h2>Observaciones</h2>
