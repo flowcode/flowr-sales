@@ -1,6 +1,6 @@
 '%entity%': 'Venta'
 '%entity% creation': 'Nueva Venta'
-'%entity% list': 'Ventas'
+'%entity% list': 'Listado de Ventas'
 'All %entity%': 'Todos las ventas'
 CUIT: CUIT
 'Create a new %entity%': 'Crear Venta'
