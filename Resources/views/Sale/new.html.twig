@@ -26,7 +26,11 @@
     {{ parent() }}
 
     <script type="text/javascript">
-        var saleId = "{{ sale.id }}";
+        {% if sale.id  %}
+            var saleId = "{{ sale.id }}";
+        {% else %}
+            var saleId = undefined;
+        {% endif %}
         var type = "sale";
     </script>
 
