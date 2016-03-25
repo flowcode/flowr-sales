@@ -42,7 +42,9 @@
                         </tr>                            
                         <tr>
                             <th scope="row">{{'Salemodificable'|trans({}, 'SaleStatus')}}</th>
+                            <th scope="row">{{'SaleDeleted'|trans({}, 'SaleStatus')}}</th>
                             <td>{% if salestatus.saleModificable %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %}</td>
+                            <td>{% if salestatus.saleDeleted %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %}</td>
                         </tr>
                     </tbody>
                 </table>

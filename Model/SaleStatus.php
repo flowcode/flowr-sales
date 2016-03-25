@@ -36,6 +36,15 @@ class SaleStatus
      */
     protected $saleModificable;
 
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="saleDeleted", type="boolean")
+     * @Groups({"public_api"})
+     */
+    protected $saleDeleted;
+
     /**
      * @ORM\OneToMany(targetEntity="\Flower\ModelBundle\Entity\Sales\Sale", mappedBy="status")
      */
@@ -47,6 +56,7 @@ class SaleStatus
     public function __construct()
     {
         $this->sales = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->saleDeleted = false;
     }
 
     /**
@@ -142,5 +152,28 @@ class SaleStatus
     public function __toString()
     {
         return $this->name;
+    }
+    
+    /**
+     * Set saleDeleted
+     *
+     * @param boolean $saleDeleted
+     * @return SaleStatus
+     */
+    public function setSaleDeleted($saleDeleted)
+    {
+        $this->saleDeleted = $saleDeleted;
+
+        return $this;
+    }
+
+    /**
+     * Get saleDeleted
+     *
+     * @return boolean 
+     */
+    public function getSaleDeleted()
+    {
+        return $this->saleDeleted;
     }
 }

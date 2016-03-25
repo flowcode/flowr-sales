@@ -17,6 +17,7 @@ class SaleStatusType extends AbstractType
         
             ->add('name')
             ->add('saleModificable')
+            ->add('saleDeleted')
         ;
     }
 

@@ -46,6 +46,7 @@
                     <tr>
                         <th scope="col">{{ thead('salestatus', 'name', 'Name') }}</th>
                         <th scope="col">{{ thead('salestatus', 'saleModificable', 'Salemodificable') }}</th>
+                        <th scope="col">{{ thead('salestatus', 'saleDeleted', 'SaleDeleted') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -56,6 +57,8 @@
                                 <a href="{{ path('admin_salesstatus_show', {id: salestatus.id}) }}">{{ salestatus.name }}</a>
                             </td>
                             <td>{% if salestatus.saleModificable %}<i class="fa fa-check-square-o"></i>{% else %}<i
+                                        class="fa fa-square-o"></i>{% endif %}</td>
+                            <td>{% if salestatus.saleDeleted %}<i class="fa fa-check-square-o"></i>{% else %}<i
                                         class="fa fa-square-o"></i>{% endif %}</td>
                         </tr>
                     {% endfor %}

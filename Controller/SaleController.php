@@ -32,6 +32,7 @@ class SaleController extends BaseController
         $saleAlias = "s";
         $accountAlias = "a";
         $qb = $em->getRepository('FlowerModelBundle:Sales\Sale')->createQueryBuilder($saleAlias);
+        $qb->leftJoin("s.owner", "u");
         $qb->leftJoin("s.account", $accountAlias);
         $qb->leftJoin("s.status", "es");
         /* filter by org security groups */
@@ -49,16 +50,16 @@ class SaleController extends BaseController
 
         if ($request->query->has('reset')) {
             $request->getSession()->set('filter.sale', null);
+            $request->getSession()->set('sort.sale', null);
             return $this->redirectToRoute("sale");
         }
 
         $this->saveFilters($request, $filters, 'sale', 'sale');
+        $qb->andWhere("es.saleDeleted = 0 ");
         $paginator = $this->filter($qb, 'sale', $request);
 
-
         $accounts = $this->get("client.service.account")->findAll();
-
-        $status = $em->getRepository('FlowerModelBundle:Sales\SaleStatus')->findAll();
+        $status = $em->getRepository('FlowerModelBundle:Sales\SaleStatus')->findBy(array("saleDeleted" => false));
         $users = $em->getRepository('FlowerModelBundle:User\User')->findAll();
         $accountFilter = $request->query->get("accountFilter");
         $filters = $this->getFilters('sale');

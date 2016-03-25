@@ -103,7 +103,7 @@
 
                                 <div class="col-sm-1">
                                     <span class="cursor-pointer text-left  ionicons {{ icon }}" style="margin-top: 8px;"
-                                          onclick="toogleSelect(accountFilter,this)"></span>
+                                          onclick="toogleSelect('#accountFilter',this)"></span>
                                 </div>
                             </div>
 
@@ -136,7 +136,7 @@
 
                                 <div class="col-sm-1">
                                     <span class="cursor-pointer text-left  ionicons {{ icon }}" style="margin-top: 8px;"
-                                          onclick="toogleSelect(statusFilter,this)"></span>
+                                          onclick="toogleSelect('#statusFilter',this)"></span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -174,7 +174,7 @@
 
                                 <div class="col-sm-1">
                                     <span class="cursor-pointer text-left  ionicons {{ icon }}" style="margin-top: 8px;"
-                                          onclick="toogleSelect(assigneeFilter,this)"></span>
+                                          onclick="toogleSelect('#ownerFilter',this)"></span>
                                 </div>
                             </div>
 
@@ -202,6 +202,7 @@
                         <th scope="col">{{ thead('sale', 'id', 'Id') }}</th>
                         <th scope="col">{{ thead('sale', 'a.name', 'Account') }}</th>
                         <th scope="col">{{ thead('sale', 'es.name', 'Status') }}</th>
+                        <th scope="col">{{ thead('sale', 'u.username', 'Responsable') }}</th>
                         <th scope="col">{{ thead('sale', 'total', 'Total') }}</th>
                         <th scope="col">{{ thead('sale', 'tax', 'Tax') }}</th>
                         <th scope="col">{{ thead('sale', 'totalWithTax', 'Totalwithtax') }}</th>
@@ -222,9 +223,10 @@
                                 <td></td>
                             {% endif %}
                             <td><a href="{{ path('sale_show', {id: sale.id}) }}">{{ sale.status }}</a></td>
-                            <td>{{ sale.total }}</td>
-                            <td>{{ sale.tax }}</td>
-                            <td>{{ sale.totalWithTax }}</td>
+                            <td>{{ sale.owner.happyname }}</td>
+                            <td>{{ sale.total | number_format(2) }}</td>
+                            <td>{{ sale.tax | number_format(2)}}</td>
+                            <td>{{ sale.totalWithTax | number_format(2)}}</td>
                             <td width="20%"><a href="{{ path('sale_show', {id: sale.id}) }}">{{ sale.observations }}</a>
                             </td>
                             <td>{{ sale.created | date('fullDateTime'| trans) }}</td>
