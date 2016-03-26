@@ -86,7 +86,19 @@ class SaleController extends BaseController
             'accounts' => $accounts,
         );
     }
-
+    public function stadisticsAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('FlowerModelBundle:Sales\Sale');
+        $topSalers = $repository->getTopSalersByMonthBetweenTime();
+        $topProducts = $repository->getTopSalersByMonthBetweenTime();
+        //$anualComparative = $repository->getTopSalersByTime();
+        
+        //top 10 vendedores del mes
+        //comparativa ventas anual mes x mes.
+        //top 10 productos mas vendidos
+        
+        
+    }
     /**
      *
      * @Route("/export", name="sale_export")

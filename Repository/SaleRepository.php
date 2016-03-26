@@ -12,4 +12,33 @@ use Doctrine\ORM\EntityRepository;
  */
 class SaleRepository extends EntityRepository
 {
+	public function getTopSalersByMonthBetweenTime($dateFrom, $dateTo, $intervals){
+		$intervals = 60*60*24*;
+		$sql = 'SELECT user as saler, UNIX_TIMESTAMP(sale.created) as created FROM sale '
+					. ' INNJER JOIN users ON sale.user_id = users.id'
+                    . 'WHERE ';
+        $data = array();
+        $nextWhere = "";
+        if($dateFrom){
+            $data[] = $dateFrom->format('Y-m-d H:i:s');
+            $sql .= $nextWhere.' sale.created > ? ';
+            $nextWhere = " and ";
+        }
+        if($dateTo){
+            $sql .= $nextWhere.' sale.created <= ? ';
+            $data[] = $dateTo->format('Y-m-d H:i:s');
+            $nextWhere = " and ";
+        }            
+        $sql .= ' GROUP BY MONTH(sale.created) DIV ?, ';
+        $sql .= ' ORDER BY created';
+        $data[] = $intervals;
+
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $stmt->execute($data);
+        return $stmt->fetchAll();
+	}
+
+	public function getTopProductsByMonthByTime(){
+
+	}
 }

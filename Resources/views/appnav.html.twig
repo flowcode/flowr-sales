@@ -13,6 +13,9 @@
         <li {% if app_sale is defined %}class="active"{% endif %}>
             <a href="{{ path('sale') }}">{{ '%entity% list'|trans({'%entity%': 'Sale'}, 'Sale') }}</a>
         </li>
+        <li {% if app_sale_report is defined %}class="active"{% endif %}>
+            <a href="{{ path('sale_report') }}">{{ 'Stadistics'|trans({}, 'Sale') }}</a>
+        </li>
 
     </ul>
 </section>
