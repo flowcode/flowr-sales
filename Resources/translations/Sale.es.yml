@@ -33,3 +33,14 @@ Discount: Descuento
 Created: Creado
 Updated: Actualizado
 Stadistics: Estadísticas
+
+Comparativo %lastYear% vs. %thisYear%: Comparativo %lastYear% vs. %thisYear%
+Top 10 Vendedores: Top 10 Vendedores
+user Id: '#'
+username: Nombre
+count sales: Cantidad
+total sales($): Total($)
+product code: Cod.
+product name: Nombre
+count product: Cantidad
+total product($): Total($)

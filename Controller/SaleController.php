@@ -86,17 +86,53 @@ class SaleController extends BaseController
             'accounts' => $accounts,
         );
     }
+    /**
+     *
+     * @Route("/stadistics", name="sale_stadistics")
+     * @Method("GET")
+     * @Template()
+     */
     public function stadisticsAction(Request $request){
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('FlowerModelBundle:Sales\Sale');
         $topSalers = $repository->getTopSalersByMonthBetweenTime();
-        $topProducts = $repository->getTopSalersByMonthBetweenTime();
-        //$anualComparative = $repository->getTopSalersByTime();
-        
+        $topProducts = $repository->getTopProductsByMonthByTime();
+        $thisYear = date("Y");
+        $lastYear = date("Y",strtotime("-1 year"));
+        $salesThisYear = $repository->getSumSalesByYear(date("Y"));
+        $salesLastYear = $repository->getSumSalesByYear(date("Y",strtotime("-1 year")));
+        $precessedSalesThisYear = array();
+        for ($i=1; $i <= 12; $i++) { 
+            $data = array("month" => $i, "sales" => 0);
+            foreach ($salesThisYear as $sale) {
+                if($sale["month"] == $i){
+                    $data = array("month" => $i, "sales" => $sale["sum"]);
+                }
+            }
+            $precessedSalesThisYear[] = $data;
+        }
+        $precessedSalesLastYear = array();
+        for ($i=1; $i <= 12; $i++) { 
+            $data = array("month" => $i, "sales" => 0);
+            foreach ($salesLastYear as $sale) {
+                if($sale["month"] == $i){
+                    $data = array("month" => $i, "sales" => $sale["sum"]);
+                }
+            }
+            $precessedSalesLastYear[] = $data;
+        }
+
         //top 10 vendedores del mes
         //comparativa ventas anual mes x mes.
         //top 10 productos mas vendidos
-        
+        return array(
+            "topSalers" => $topSalers,
+            "topProducts" => $topProducts,
+            "salesLastYear" => $precessedSalesLastYear,
+            "salesThisYear" => $precessedSalesThisYear,
+            "thisYear" => $thisYear,
+            "lastYear" => $lastYear,
+            );
         
     }
     /**
