@@ -32,6 +32,7 @@ class SaleRepository extends EntityRepository
         }            
         $sql .= ' GROUP BY us.id';
         $sql .= ' ORDER BY count DESC, sum DESC';
+        $sql .= ' limit 10';
 
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->execute($data);
@@ -59,6 +60,7 @@ class SaleRepository extends EntityRepository
         }            
         $sql .= ' GROUP BY MONTH(sa.created), p.id';
         $sql .= ' ORDER BY count DESC, sum DESC';
+        $sql .= ' limit 10';
 
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->execute($data);
