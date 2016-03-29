@@ -14,7 +14,7 @@ class SaleRepository extends EntityRepository
 {
 	public function getTopSalersByMonthBetweenTime($dateFrom = null, $dateTo = null)
 	{
-		$sql = 'SELECT count(sa.id) as count, sum(sa.total) as sum, us.username as username, us.id as userId FROM sale as sa'
+		$sql = 'SELECT count(sa.id) as count, sum(sa.totalWithTax) as sum, us.username as username, us.id as userId FROM sale as sa'
 					. ' INNER JOIN sale_status as ss ON sa.status = ss.id'
 					. ' INNER JOIN users as us ON sa.user_id = us.id'
                     . ' WHERE ss.saleDeleted = 0 ';
@@ -67,7 +67,7 @@ class SaleRepository extends EntityRepository
         return $stmt->fetchAll();
 	}
 	public function getSumSalesByYear($year){
-		$sql = 'SELECT sum(sa.total) as sum, MONTH(sa.created) as month FROM sale as sa'
+		$sql = 'SELECT sum(sa.totalWithTax) as sum, MONTH(sa.created) as month FROM sale as sa'
 					. ' INNER JOIN sale_status as ss ON sa.status = ss.id'
                     . ' WHERE ss.saleDeleted = 0 ';
         $data = array();
