@@ -4,6 +4,7 @@ namespace Flower\SalesBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Groups;
+
 /**
  * SaleStatus
  *
@@ -36,6 +37,22 @@ class SaleStatus
      */
     protected $saleModificable;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="stock_modifier", type="boolean")
+     * @Groups({"public_api"})
+     */
+    protected $stockModifier;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="invoiceable", type="boolean")
+     * @Groups({"public_api"})
+     */
+    protected $invoiceable;
+
 
     /**
      * @var boolean
@@ -49,7 +66,7 @@ class SaleStatus
      * @ORM\OneToMany(targetEntity="\Flower\ModelBundle\Entity\Sales\Sale", mappedBy="status")
      */
     protected $sales;
-         
+
     /**
      * Constructor
      */
@@ -57,12 +74,13 @@ class SaleStatus
     {
         $this->sales = new \Doctrine\Common\Collections\ArrayCollection();
         $this->saleDeleted = false;
+        $this->invoiceable = false;
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -85,7 +103,7 @@ class SaleStatus
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -108,7 +126,7 @@ class SaleStatus
     /**
      * Get saleModificable
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getSaleModificable()
     {
@@ -141,19 +159,19 @@ class SaleStatus
     /**
      * Get sales
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSales()
     {
         return $this->sales;
     }
 
-        
+
     public function __toString()
     {
         return $this->name;
     }
-    
+
     /**
      * Set saleDeleted
      *
@@ -170,10 +188,44 @@ class SaleStatus
     /**
      * Get saleDeleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getSaleDeleted()
     {
         return $this->saleDeleted;
     }
+
+    /**
+     * @return boolean
+     */
+    public function isInvoiceable()
+    {
+        return $this->invoiceable;
+    }
+
+    /**
+     * @param boolean $invoiceable
+     */
+    public function setInvoiceable($invoiceable)
+    {
+        $this->invoiceable = $invoiceable;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isStockModifier()
+    {
+        return $this->stockModifier;
+    }
+
+    /**
+     * @param boolean $stockModifier
+     */
+    public function setStockModifier($stockModifier)
+    {
+        $this->stockModifier = $stockModifier;
+    }
+    
+
 }

@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+
 /**
  * SaleItem
  */
@@ -36,18 +37,21 @@ class SaleItem
      * @Groups({"public_api"})
      */
     protected $unitPrice;
+
     /**
      * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Stock\Product", cascade={"persist"})
      * @ORM\JoinColumn(name="product", referencedColumnName="id", nullable=true)
      * @Groups({"public_api"})
      */
     protected $product;
+
     /**
      * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Stock\Service", cascade={"persist"})
      * @ORM\JoinColumn(name="service", referencedColumnName="id", nullable=true)
      * @Groups({"public_api"})
      */
     protected $service;
+
     /**
      * @var float
      *
@@ -62,7 +66,7 @@ class SaleItem
      */
     protected $sale;
 
-     
+
     /**
      * Constructor
      */
@@ -74,7 +78,7 @@ class SaleItem
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -97,7 +101,7 @@ class SaleItem
     /**
      * Get units
      *
-     * @return integer 
+     * @return integer
      */
     public function getUnits()
     {
@@ -120,7 +124,7 @@ class SaleItem
     /**
      * Get unitPrice
      *
-     * @return float 
+     * @return float
      */
     public function getUnitPrice()
     {
@@ -143,7 +147,7 @@ class SaleItem
     /**
      * Get total
      *
-     * @return float 
+     * @return float
      */
     public function getTotal()
     {
@@ -166,7 +170,7 @@ class SaleItem
     /**
      * Get sale
      *
-     * @return \Flower\ModelBundle\Entity\Sales\Sale 
+     * @return \Flower\ModelBundle\Entity\Sales\Sale
      */
     public function getSale()
     {
@@ -189,12 +193,13 @@ class SaleItem
     /**
      * Get service
      *
-     * @return \Flower\ModelBundle\Entity\Stock\service 
+     * @return \Flower\ModelBundle\Entity\Stock\service
      */
     public function getService()
     {
         return $this->service;
     }
+
     /**
      * Set product
      *
@@ -211,7 +216,7 @@ class SaleItem
     /**
      * Get product
      *
-     * @return \Flower\ModelBundle\Entity\Stock\Product 
+     * @return \Flower\ModelBundle\Entity\Stock\Product
      */
     public function getProduct()
     {

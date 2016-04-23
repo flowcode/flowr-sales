@@ -23,23 +23,38 @@ class SaleController extends FOSRestController
         $form = $this->createForm($this->get("form.api.sale"), $sale, array(
             'method' => 'PUT',
         ));
-        $this->removeExtraFields($request,$form);
+        $this->removeExtraFields($request, $form);
         $form->submit($request);
         if ($form->isValid()) {
+
+
             foreach ($sale->getSaleItems() as $item) {
-                if((!$item->getProduct() && !$item->getService()) || $item->getUnits() == 0 ){
+                if ((!$item->getProduct() && !$item->getService()) || $item->getUnits() == 0) {
                     $sale->removeSaleItem($item);
                     $item->setSale(null);
                     $em->remove($item);
-                }else{
+                } else {
+
+                    /* Stock management */
+                    if ($sale->getStatus()->isStockModifier()) {
+
+                        if ($item->getProduct()) {
+                            $stockService = $this->get('flower.stock.service.stock');
+                            $stockService->decreaseProduct($item->getProduct(), $item->getUnits());
+
+                        }
+                    }
+
                     $item->setSale($sale);
                 }
             }
             $em->flush();
-            $response = array("success" => true, "message" => "Sale created", "entity" =>$sale );
+
+
+            $response = array("success" => true, "message" => "Sale created", "entity" => $sale);
             return $this->handleView(FOSView::create($response, Codes::HTTP_OK)->setFormat("json"));
         }
-        $response= array('success' => false, 'errors' => $form->getErrors());
+        $response = array('success' => false, 'errors' => $form->getErrors());
         return $this->handleView(FOSView::create($response, Codes::HTTP_NOT_FOUND)->setFormat("json"));
     }
 
@@ -48,9 +63,9 @@ class SaleController extends FOSRestController
         $em = $this->getDoctrine()->getManager();
         $sale = new Sale();
         $form = $this->createForm($this->get("form.api.sale"), $sale);
-        $this->removeExtraFields($request,$form);
+        $this->removeExtraFields($request, $form);
         $form->submit($request);
-        if ($form->isValid()) {            
+        if ($form->isValid()) {
             $sale->setDate(new \DateTime());
             $sale->setOwner($this->getUser());
             foreach ($sale->getSaleItems() as $item) {
@@ -58,22 +73,22 @@ class SaleController extends FOSRestController
             }
             $em->persist($sale);
             $em->flush();
-            $response = array("success" => true, "message" => "Sale created", "entity" =>$sale );
+            $response = array("success" => true, "message" => "Sale created", "entity" => $sale);
             return $this->handleView(FOSView::create($response, Codes::HTTP_OK)->setFormat("json"));
         }
-        $response= array('success' => false, 'errors' => $form->getErrors());
+        $response = array('success' => false, 'errors' => $form->getErrors());
         return $this->handleView(FOSView::create($response, Codes::HTTP_NOT_FOUND)->setFormat("json"));
     }
 
-    private function removeExtraFields(Request $request,  Form $form)
+    private function removeExtraFields(Request $request, Form $form)
     {
-        $data     = $request->request->all();
+        $data = $request->request->all();
         $children = $form->all();
-        $data     = array_intersect_key($data, $children);
+        $data = array_intersect_key($data, $children);
         $request->request->replace($data);
     }
 
-    public function getAction(Request $request, Sale $sale )
+    public function getAction(Request $request, Sale $sale)
     {
         $view = FOSView::create($sale, Codes::HTTP_OK)->setFormat('json');
         $view->getSerializationContext()->setGroups(array('public_api'));

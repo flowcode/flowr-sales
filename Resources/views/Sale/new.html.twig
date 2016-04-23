@@ -12,7 +12,20 @@
     </section>
     <section class="content">
         <div class="box" multi-app="flowerSales">
-            <toaster-container ></toaster-container>
+            <div class="box-header">
+                <div class="box-tools">
+                    {% if sale.customerInvoice %}
+                        <a href="{{ path('finance_customer_invoice_show', {'id':sale.customerInvoice.id}) }}">
+                            View invoice
+                        </a>
+                    {% elseif sale.status and sale.status.isInvoiceable() %}
+                        <a href="{{ path('finance_customer_invoice_create_from_sale', {'id':sale.id}) }}">
+                            Create Invoice
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            <toaster-container></toaster-container>
             <div class="box-body" ng-view>
                 Loading...
             </div>
@@ -20,16 +33,16 @@
     </section>
 {% endblock %}
 {% block stylesheets %}
-{{ parent() }}
+    {{ parent() }}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
 
     <script type="text/javascript">
-        {% if sale.id  %}
-            var saleId = "{{ sale.id }}";
+        {% if sale.id %}
+        var saleId = "{{ sale.id }}";
         {% else %}
-            var saleId = undefined;
+        var saleId = undefined;
         {% endif %}
         var type = "sale";
     </script>
@@ -37,19 +50,30 @@
     <script src="{{ asset('bundles/ivoryckeditor/ckeditor.js') }}"></script>
 
     <script src="{{ asset('bundles/flowercore/js/angular/sales/app-sales.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/flowercore/js/angular/sales/services/accountService.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/flowercore/js/angular/sales/services/productService.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/flowercore/js/angular/sales/services/serviceService.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/flowercore/js/angular/sales/services/activityService.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/flowercore/js/angular/sales/services/contactService.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/flowercore/js/angular/sales/services/saleService.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/flowercore/js/angular/sales/services/saleStatusService.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/flowercore/js/angular/sales/services/subsidiaryService.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/flowercore/js/angular/sales/services/saleCategoryService.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/flowercore/js/angular/sales/services/paymentMethodService.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/flowercore/js/angular/sales/services/accountService.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('bundles/flowercore/js/angular/sales/services/productService.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('bundles/flowercore/js/angular/sales/services/serviceService.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('bundles/flowercore/js/angular/sales/services/activityService.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('bundles/flowercore/js/angular/sales/services/contactService.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('bundles/flowercore/js/angular/sales/services/saleService.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('bundles/flowercore/js/angular/sales/services/saleStatusService.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('bundles/flowercore/js/angular/sales/services/subsidiaryService.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('bundles/flowercore/js/angular/sales/services/saleCategoryService.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('bundles/flowercore/js/angular/sales/services/paymentMethodService.js') }}"
+            type="text/javascript"></script>
 
-    <script src="{{ asset('bundles/flowercore/js/angular/sales/controller/salesController.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/flowercore/js/angular/sales/controller/salesController.js') }}"
+            type="text/javascript"></script>
 
 
-    </script>
+        </script>
 {% endblock %}

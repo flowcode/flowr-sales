@@ -16,34 +16,46 @@ class SaleType extends AbstractType
     {
         $builder
             ->add('total')
-            ->add('total_with_tax',null,array(
-                'property_path' => 'totalWithTax'))
+            ->add('total_with_tax', null, array(
+                'property_path' => 'totalWithTax'
+            ))
             ->add('tax')
             ->add('circuit')
-            ->add('discount',null,array(
-                'required' => false))
-            ->add('discount_type',null,array(
+            ->add('discount', null, array(
+                'required' => false
+            ))
+            ->add('category', null, array(
+                'required' => false
+            ))
+            ->add('discount_type', null, array(
                 'property_path' => 'discountType',
-                'required' => false))
-            ->add('total_discount',null,array(
+                'required' => false
+            ))
+            ->add('total_discount', null, array(
                 'property_path' => 'totalDiscount',
-                'required' => false))
+                'required' => false
+            ))
             ->add('account', 'entity', array(
-                                'class' => 'Flower\ModelBundle\Entity\Clients\Account'))
+                'class' => 'Flower\ModelBundle\Entity\Clients\Account'
+            ))
             ->add('contact', 'entity', array(
-                                'class' => 'Flower\ModelBundle\Entity\Clients\Contact'))
-            ->add('payment_observations',null,array(
-                'property_path' => 'paymentObservations'))
+                'class' => 'Flower\ModelBundle\Entity\Clients\Contact'
+            ))
+            ->add('payment_observations', null, array(
+                'property_path' => 'paymentObservations'
+            ))
             ->add('observations')
             ->add("status", 'entity', array(
-                                'class' => 'Flower\ModelBundle\Entity\Sales\SaleStatus'))
+                'class' => 'Flower\ModelBundle\Entity\Sales\SaleStatus'
+            ))
             ->add("paymentmethod", 'entity', array(
-                                'class' => 'Flower\ModelBundle\Entity\Sales\PaymentMethod'))
+                'class' => 'Flower\ModelBundle\Entity\Sales\PaymentMethod'
+            ))
             ->add('sale_items', 'collection', array(
-                                'by_reference' => false,
-                                'type' => new SaleItemType(),
-                                'allow_add'    => true))
-            ;
+                'by_reference' => false,
+                'type' => new SaleItemType(),
+                'allow_add' => true
+            ));
     }
 
     /**

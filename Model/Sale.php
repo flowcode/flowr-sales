@@ -7,6 +7,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToOne;
+
 /**
  * Sale
  */
@@ -17,6 +19,7 @@ class Sale
 
     const DISCOUNT_PORCENTAJE = 1;
     const DISCOUNT_NUMBER = 2;
+
     /**
      * @var integer
      *
@@ -49,6 +52,7 @@ class Sale
      * @Groups({"public_api"})
      */
     protected $totalWithTax;
+
     /**
      * @var float
      *
@@ -102,19 +106,21 @@ class Sale
      * @Groups({"public_api"})
      */
     protected $category;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Clients\Account")
      * @ORM\JoinColumn(name="account", referencedColumnName="id")
      * @Groups({"public_api"})
      */
     protected $account;
+
     /**
      * @ManyToOne(targetEntity="\Flower\ModelBundle\Entity\User\User")
      * @JoinColumn(name="user_id", referencedColumnName="id")
      * @Groups({"public_api"})
      * */
     protected $owner;
+
     /**
      * @ORM\OneToMany(targetEntity="\Flower\ModelBundle\Entity\Sales\SaleItem", mappedBy="sale", cascade={"persist", "remove"})
      * @Groups({"public_api"})
@@ -127,7 +133,7 @@ class Sale
      * @Groups({"public_api"})
      */
     protected $paymentmethod;
-        /**
+    /**
      * @var string
      *
      * @ORM\Column(name="paymentObservations", type="text", nullable=true)
@@ -156,7 +162,14 @@ class Sale
      * @ORM\JoinColumn(name="status", referencedColumnName="id")
      * @Groups({"public_api"})
      */
-     protected $status;
+    protected $status;
+
+    /**
+     * @ORM\OneToOne(targetEntity="\Flower\FinancesBundle\Entity\CustomerInvoice", inversedBy="sale")
+     * @ORM\JoinColumn(name="customer_invoice_id", referencedColumnName="id")
+     * @Groups({"public_api"})
+     */
+    protected $customerInvoice;
 
     /**
      * @var integer
@@ -169,7 +182,7 @@ class Sale
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -192,7 +205,7 @@ class Sale
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -215,7 +228,7 @@ class Sale
     /**
      * Get total
      *
-     * @return float 
+     * @return float
      */
     public function getTotal()
     {
@@ -238,7 +251,7 @@ class Sale
     /**
      * Get discount
      *
-     * @return float 
+     * @return float
      */
     public function getDiscount()
     {
@@ -261,7 +274,7 @@ class Sale
     /**
      * Get totalDiscount
      *
-     * @return float 
+     * @return float
      */
     public function getTotalDiscount()
     {
@@ -285,12 +298,13 @@ class Sale
     /**
      * Get discountType
      *
-     * @return integer 
+     * @return integer
      */
     public function getDiscountType()
     {
         return $this->discountType;
     }
+
     /**
      * Set totalWithTax
      *
@@ -307,7 +321,7 @@ class Sale
     /**
      * Get totalWithTax
      *
-     * @return float 
+     * @return float
      */
     public function getTotalWithTax()
     {
@@ -330,7 +344,7 @@ class Sale
     /**
      * Get tax
      *
-     * @return float 
+     * @return float
      */
     public function getTax()
     {
@@ -353,7 +367,7 @@ class Sale
     /**
      * Get observations
      *
-     * @return string 
+     * @return string
      */
     public function getObservations()
     {
@@ -376,7 +390,7 @@ class Sale
     /**
      * Get paymentObservations
      *
-     * @return string 
+     * @return string
      */
     public function getPaymentObservations()
     {
@@ -417,13 +431,13 @@ class Sale
     /**
      * Get saleItems
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSaleItems()
     {
         return $this->saleItems;
     }
-    
+
     /**
      * Set created
      *
@@ -440,7 +454,7 @@ class Sale
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -463,7 +477,7 @@ class Sale
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -486,7 +500,7 @@ class Sale
     /**
      * Get paymentmethod
      *
-     * @return \Flower\ModelBundle\Entity\Sales\PaymentMethod 
+     * @return \Flower\ModelBundle\Entity\Sales\PaymentMethod
      */
     public function getPaymentmethod()
     {
@@ -510,7 +524,7 @@ class Sale
     /**
      * Get contact
      *
-     * @return \Flower\ModelBundle\Entity\Clients\Contact 
+     * @return \Flower\ModelBundle\Entity\Clients\Contact
      */
     public function getContact()
     {
@@ -533,13 +547,13 @@ class Sale
     /**
      * Get account
      *
-     * @return \Flower\ModelBundle\Entity\Clients\Account 
+     * @return \Flower\ModelBundle\Entity\Clients\Account
      */
     public function getAccount()
     {
         return $this->account;
     }
-    
+
     /**
      * Set owner
      *
@@ -556,7 +570,7 @@ class Sale
     /**
      * Get owner
      *
-     * @return \Flower\ModelBundle\Entity\User\User 
+     * @return \Flower\ModelBundle\Entity\User\User
      */
     public function getOwner()
     {
@@ -579,7 +593,7 @@ class Sale
     /**
      * Get status
      *
-     * @return \Flower\ModelBundle\Entity\Sales\SaleStatus 
+     * @return \Flower\ModelBundle\Entity\Sales\SaleStatus
      */
     public function getStatus()
     {
@@ -603,7 +617,7 @@ class Sale
     /**
      * Get circuit
      *
-     * @return integer 
+     * @return integer
      */
     public function getCircuit()
     {
@@ -626,10 +640,29 @@ class Sale
     /**
      * Get category
      *
-     * @return \Flower\ModelBundle\Entity\Sales\SaleCategory 
+     * @return \Flower\ModelBundle\Entity\Sales\SaleCategory
      */
     public function getCategory()
     {
         return $this->category;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCustomerInvoice()
+    {
+        return $this->customerInvoice;
+    }
+
+    /**
+     * @param mixed $customerInvoice
+     */
+    public function setCustomerInvoice($customerInvoice)
+    {
+        $this->customerInvoice = $customerInvoice;
+    }
+
+    
+
 }
