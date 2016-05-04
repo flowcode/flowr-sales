@@ -165,11 +165,11 @@ class Sale
     protected $status;
 
     /**
-     * @ORM\OneToOne(targetEntity="\Flower\FinancesBundle\Entity\CustomerInvoice", inversedBy="sale")
-     * @ORM\JoinColumn(name="customer_invoice_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="\Flower\FinancesBundle\Entity\Document", inversedBy="sale")
+     * @ORM\JoinColumn(name="document_id", referencedColumnName="id")
      * @Groups({"public_api"})
      */
-    protected $customerInvoice;
+    protected $document;
 
     /**
      * @var integer
@@ -650,17 +650,17 @@ class Sale
     /**
      * @return mixed
      */
-    public function getCustomerInvoice()
+    public function getDocument()
     {
-        return $this->customerInvoice;
+        return $this->document;
     }
 
     /**
-     * @param mixed $customerInvoice
+     * @param mixed $document
      */
-    public function setCustomerInvoice($customerInvoice)
+    public function setDocument($document)
     {
-        $this->customerInvoice = $customerInvoice;
+        $this->document = $document;
     }
 
     

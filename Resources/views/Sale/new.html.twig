@@ -14,12 +14,12 @@
         <div class="box" multi-app="flowerSales">
             <div class="box-header">
                 <div class="box-tools">
-                    {% if sale.customerInvoice %}
-                        <a href="{{ path('finance_customer_invoice_show', {'id':sale.customerInvoice.id}) }}">
+                    {% if sale.document %}
+                        <a href="{{ path('finance_document_show', {'id':sale.document.id}) }}">
                             View invoice
                         </a>
                     {% elseif sale.status and sale.status.isInvoiceable() %}
-                        <a href="{{ path('finance_customer_invoice_create_from_sale', {'id':sale.id}) }}">
+                        <a href="{{ path('finance_document_create_from_sale', {'id':sale.id}) }}">
                             Create Invoice
                         </a>
                     {% endif %}
