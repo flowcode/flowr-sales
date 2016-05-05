@@ -19,7 +19,7 @@
                             View invoice
                         </a>
                     {% elseif sale.status and sale.status.isInvoiceable() %}
-                        <a href="{{ path('finance_document_create_from_sale', {'id':sale.id}) }}">
+                        <a href="{{ path('finance_document_ci_create_from_sale', {'id':sale.id}) }}">
                             Create Invoice
                         </a>
                     {% endif %}
