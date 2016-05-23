@@ -86,36 +86,38 @@ class SaleController extends BaseController
             'accounts' => $accounts,
         );
     }
+
     /**
      *
      * @Route("/stadistics", name="sale_stadistics")
      * @Method("GET")
      * @Template()
      */
-    public function stadisticsAction(Request $request){
+    public function stadisticsAction(Request $request)
+    {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('FlowerModelBundle:Sales\Sale');
         $topSalers = $repository->getTopSalersByMonthBetweenTime();
         $topProducts = $repository->getTopProductsByMonthByTime();
         $thisYear = date("Y");
-        $lastYear = date("Y",strtotime("-1 year"));
+        $lastYear = date("Y", strtotime("-1 year"));
         $salesThisYear = $repository->getSumSalesByYear(date("Y"));
-        $salesLastYear = $repository->getSumSalesByYear(date("Y",strtotime("-1 year")));
+        $salesLastYear = $repository->getSumSalesByYear(date("Y", strtotime("-1 year")));
         $precessedSalesThisYear = array();
-        for ($i=1; $i <= 12; $i++) { 
+        for ($i = 1; $i <= 12; $i++) {
             $data = array("month" => $i, "sales" => 0);
             foreach ($salesThisYear as $sale) {
-                if($sale["month"] == $i){
+                if ($sale["month"] == $i) {
                     $data = array("month" => $i, "sales" => $sale["sum"]);
                 }
             }
             $precessedSalesThisYear[] = $data;
         }
         $precessedSalesLastYear = array();
-        for ($i=1; $i <= 12; $i++) { 
+        for ($i = 1; $i <= 12; $i++) {
             $data = array("month" => $i, "sales" => 0);
             foreach ($salesLastYear as $sale) {
-                if($sale["month"] == $i){
+                if ($sale["month"] == $i) {
                     $data = array("month" => $i, "sales" => $sale["sum"]);
                 }
             }
@@ -132,9 +134,10 @@ class SaleController extends BaseController
             "salesThisYear" => $precessedSalesThisYear,
             "thisYear" => $thisYear,
             "lastYear" => $lastYear,
-            );
-        
+        );
+
     }
+
     /**
      *
      * @Route("/export", name="sale_export")
@@ -188,6 +191,42 @@ class SaleController extends BaseController
         return array(
             'sale' => $sale,
         );
+    }
+
+    /**
+     * Finds and displays a Sale entity.
+     *
+     * @Route("/{id}/display", name="sale_display", requirements={"id"="\d+"})
+     * @Method("GET")
+     * @Template("FlowerSalesBundle:Sale:display.html.twig")
+     */
+    public function displayAction(Sale $sale)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $paymentMethods = $em->getRepository('FlowerModelBundle:Sales\PaymentMethod')->findAll();
+        return array(
+            'sale' => $sale,
+            'paymentMethods' => $paymentMethods,
+        );
+    }
+
+    /**
+     * Finds and displays a Sale entity.
+     *
+     * @Route("/{id}/change_status", name="sale_change_status", requirements={"id"="\d+"})
+     * @Method("POST")
+     * @Template("FlowerSalesBundle:Sale:display.html.twig")
+     */
+    public function changeStatusAction(Sale $sale, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $statusTo = $em->getRepository('FlowerModelBundle:Sales\SaleStatus')->find($request->get('status_to'));
+
+        $sale->setStatus($statusTo);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('sale_display', array('id' => $sale->getId())));
     }
 
 

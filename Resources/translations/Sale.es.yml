@@ -35,6 +35,9 @@ Created: Creado
 Updated: Actualizado
 Stadistics: Estadísticas
 
+orders: pedidos
+sale_order: pedido
+
 Comparativo %lastYear% vs. %thisYear%: Comparativo %lastYear% vs. %thisYear%
 Top 10 Vendedores: Top 10 Vendedores
 user Id: '#'

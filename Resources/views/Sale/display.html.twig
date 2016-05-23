@@ -1,0 +1,196 @@
+{% extends "FlowerCoreBundle::layout.html.twig" %}
+
+{% block title %}{{ '%entity% creation'|trans({'%entity%': 'Sale'}, 'Sale') }} - {{ parent() }}{% endblock %}
+
+{% block app_menu %}
+    {{ include("FlowerSalesBundle::appnav.html.twig", { 'app_sale': true }) }}
+{% endblock %}
+
+{% block body %}
+    <section class="content-header">
+        <h1>
+            <a href="{{ path('stock_order') }}">
+                {{ 'orders'|trans({}, 'Sale')|title }}
+            </a>
+        </h1>
+    </section>
+    <section class="content">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">
+                    {{ 'sale_order'|trans({}, 'Sale')|title }}: {{ sale }}
+                    {{ include('FlowerSalesBundle:Sale:status.html.twig',{'status': sale.status}) }}
+                </h3>
+                <div class="box-tools">
+                    <a href="{{ path('sale_pdf_export',{'id':sale.id}) }}" class="btn btn-default">
+                        Imprimir
+                    </a>
+                </div>
+            </div>
+            <div class="box-body">
+
+                <div class="row">
+                    <div class="col-sm-6">
+                    <span>Pasar a:</span>
+                    {{ include('FlowerSalesBundle:Sale:optionStatus.html.twig',{
+                        'sale':sale,
+                        'options_statuses':sale.status.following
+                    }) }}
+                    </div>
+                </div>
+
+                <hr>
+
+                FECHA: {{ sale.created | date("smallDate"| trans) }}</h3>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <table class="table">
+                            <tr>
+                                <th>
+                                    {{ 'Company data' | trans({},'Sale') | upper }}
+                                </th>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    {{ 'name' | trans({},'Sale') | capitalize }}
+                                </th>
+                                <td padding="5px">
+                                    {{ sale.account.name }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    {{ 'businessName' | trans({},'Sale') | capitalize }}
+                                </th>
+                                <td>
+                                    {{ sale.account.businessName }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    {{ 'CUIT' | trans({},'Sale')| capitalize }}
+                                </th>
+                                <td>
+                                    {{ sale.account.cuit }}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-sm-6">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th colspan="4">
+                                    {{ 'Description' | trans({},'Sale') | upper }}
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>{{ 'Product' | trans({},'Sale') }}</td>
+                                <td>{{ 'Units' | trans({},'Sale') }}</td>
+                                <td>{{ 'Units Price' | trans({},'Sale') }}</td>
+                                <td>{{ 'Total' | trans({},'Sale') }}</td>
+                            </tr>
+                            </thead>
+                            {% for item in sale.saleItems %}
+                                <tr>
+                                    <td>
+                                        {% if item.product %}
+                                            {{ item.product }}
+                                        {% else %}
+                                            {{ item.service }}
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ item.units }}</td>
+                                    <td>{{ item.unitPrice }}</td>
+                                    <td>{{ item.total }}</td>
+                                </tr>
+                            {% endfor %}
+                            {% if sale.discount %}
+                                <tr>
+                                    <td padding="5px">
+                                    </td>
+                                    <td padding="5px">
+                                    </td>
+                                    <td padding="5px" background.color="lightgray">
+                                        {{ 'Discount' | trans({},'Sale') }}
+                                        (
+                                        {% if sale.discountType == 1 %}
+                                            %
+                                        {% else %}
+                                            -$
+                                        {% endif %}
+                                        {{ sale.discount }})
+                                    </td>
+                                    <td padding="5px">{{ sale.totalDiscount }}</td>
+                                </tr>
+                            {% endif %}
+                            <tr>
+                                <td padding="5px"></td>
+                                <td padding="5px"></td>
+                                <td padding="5px" background.color="lightgray">{{ 'Total' | trans({},'Sale') }}</td>
+                                <td padding="5px">{{ sale.total }}</td>
+                            </tr>
+                            {% if sale.circuit == 1 %}
+                                <tr>
+                                    <td padding="5px"></td>
+                                    <td padding="5px"></td>
+                                    <td padding="5px" background.color="lightgray">{{ 'Tax' | trans({},'Sale') }}</td>
+                                    <td padding="5px">{{ sale.tax }}</td>
+                                </tr>
+                            {% endif %}
+                            <tr>
+                                <td padding="5px"></td>
+                                <td padding="5px"></td>
+                                <td padding="5px"
+                                    background.color="lightgray">{{ 'Totalwithtax' | trans({},'Sale') }}</td>
+                                <td padding="5px">{{ sale.totalWithTax }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h2>
+                            Forma depago
+                        </h2>
+                        <div>
+                            <table width="300px">
+                                <tr>
+                                    {% for paymentMethod in paymentMethods %}
+                                        <td border.type="none" width="15px">
+                                            {% if paymentMethod.id == sale.paymentmethod.id %}
+                                                <img width="10px" float='left'
+                                                     src="{{ pdf_image('FlowerCoreBundle:assets/checked.jpg') }}"/>
+                                            {% else %}
+                                                <img width="10px" float='left'
+                                                     src="{{ pdf_image('FlowerCoreBundle:assets/not-checked.jpg') }}"/>
+                                            {% endif %}
+                                        </td>
+                                        <td border.type="none">
+                                            {{ paymentMethod.name }}
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                            </table>
+                            <p>
+                                {{ sale.paymentObservations }}
+                            </p>
+
+
+                        </div>
+                        <h2>Observaciones</h2>
+                        <p>
+                            {{ sale.observations }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

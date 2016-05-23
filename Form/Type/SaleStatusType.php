@@ -20,6 +20,8 @@ class SaleStatusType extends AbstractType
             ->add('saleDeleted')
             ->add('invoiceable')
             ->add('stockModifier')
+            ->add('previous')
+            ->add('following')
         ;
     }
 

@@ -2,9 +2,12 @@
 
 namespace Flower\SalesBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Groups;
-
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
 /**
  * SaleStatus
  *
@@ -53,7 +56,6 @@ class SaleStatus
      */
     protected $invoiceable;
 
-
     /**
      * @var boolean
      *
@@ -68,6 +70,17 @@ class SaleStatus
     protected $sales;
 
     /**
+     * @ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Sales\SaleStatus", inversedBy="following")
+     * @JoinColumn(name="sale_status_id", referencedColumnName="id")
+     */
+    protected $previous;
+
+    /**
+     * @OneToMany(targetEntity="\Flower\ModelBundle\Entity\Sales\SaleStatus", mappedBy="previous")
+     */
+    protected $following;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -75,6 +88,7 @@ class SaleStatus
         $this->sales = new \Doctrine\Common\Collections\ArrayCollection();
         $this->saleDeleted = false;
         $this->invoiceable = false;
+        $this->following = new ArrayCollection();
     }
 
     /**
@@ -226,6 +240,39 @@ class SaleStatus
     {
         $this->stockModifier = $stockModifier;
     }
-    
+
+    /**
+     * @return mixed
+     */
+    public function getPrevious()
+    {
+        return $this->previous;
+    }
+
+    /**
+     * @param mixed $previous
+     */
+    public function setPrevious($previous)
+    {
+        $this->previous = $previous;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFollowing()
+    {
+        return $this->following;
+    }
+
+    /**
+     * @param mixed $following
+     */
+    public function setFollowing($following)
+    {
+        $this->following = $following;
+    }
+
+
 
 }

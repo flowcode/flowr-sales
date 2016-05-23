@@ -1,0 +1,17 @@
+{% if status.saleModificable %}
+    <span class="text-muted">
+        {{ status.name|trans }}
+    </span>
+{% elseif status.stockModifier %}
+    <span class="text-warning">
+        {{ status.name|trans }}
+    </span>
+{% elseif status.invoiceable %}
+    <span class="text-info">
+        {{ status.name|trans }}
+    </span>
+{% else %}
+    <span class="text-muted">
+        {{ status.name|trans }}
+    </span>
+{% endif %}

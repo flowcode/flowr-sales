@@ -28,7 +28,7 @@
 
 {% block body %}
     <section class="content-header">
-        <h1>{{'%entity% list' |trans({}, 'Sale') }}</h1>
+        <h1>{{ '%entity% list' |trans({}, 'Sale') }}</h1>
     </section>
     <section class="content">
         <div class="box">
@@ -214,26 +214,36 @@
                     </thead>
                     <tbody>
                     {% for sale in paginator %}
+
+                        {% set show_url = 'sale_display' %}
+                        {% if sale.status.saleModificable %}
+                            {% set show_url = 'sale_show' %}
+                        {% endif %}
+
                         <tr>
-                            <td><a href="{{ path('sale_show', {id: sale.id}) }}"># {{ sale.id }}</a></td>
+                            <td>
+                                <a href="{{ path(show_url, {id: sale.id}) }}"># {{ sale.id }}</a>
+                            </td>
                             {% if sale.account %}
                                 <td><a href="{{ path('account_show', {id: sale.account.id}) }}">{{ sale.account }}</a>
                                 </td>
                             {% else %}
                                 <td></td>
                             {% endif %}
-                            <td><a href="{{ path('sale_show', {id: sale.id}) }}">{{ sale.status }}</a></td>
+                            <td>
+
+                                <a href="{{ path(show_url, {id: sale.id}) }}">{{ sale.status }}</a>
+                            </td>
                             <td>{{ sale.owner.happyname }}</td>
                             <td>{{ sale.total | number_format(2) }}</td>
-                            <td>{{ sale.tax | number_format(2)}}</td>
-                            <td>{{ sale.totalWithTax | number_format(2)}}</td>
-                            <td width="20%"><a href="{{ path('sale_show', {id: sale.id}) }}">{{ sale.observations }}</a>
+                            <td>{{ sale.tax | number_format(2) }}</td>
+                            <td>{{ sale.totalWithTax | number_format(2) }}</td>
+                            <td width="20%"><a href="{{ path(show_url, {id: sale.id}) }}">{{ sale.observations }}</a>
                             </td>
                             <td>{{ sale.created | date('fullDateTime'| trans) }}</td>
                             <td>{{ sale.updated | date('fullDateTime'| trans) }}</td>
                             <td>
                                 <a href="{{ path('sale_pdf_export', {id: sale.id}) }}">factura</a>
-
                             </td>
                         </tr>
                     {% endfor %}
