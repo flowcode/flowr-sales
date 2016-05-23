@@ -39,8 +39,7 @@ class SaleController extends FOSRestController
 
                         if ($item->getProduct()) {
                             $stockService = $this->get('flower.stock.service.stock');
-                            $stockService->decreaseProduct($item->getProduct(), $item->getUnits());
-
+                            $stockService->decreaseProduct($item->getProduct(), $item->getUnits(), $sale);
                         }
                     }
 

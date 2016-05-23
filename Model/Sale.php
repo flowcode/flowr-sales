@@ -663,6 +663,11 @@ class Sale
         $this->document = $document;
     }
 
-    
+    function __toString()
+    {
+        $text = (string)$this->getId();
+        return $text;
+    }
+
 
 }

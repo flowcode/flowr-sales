@@ -12,24 +12,24 @@ use Doctrine\ORM\EntityRepository;
  */
 class SaleRepository extends EntityRepository
 {
-	public function getTopSalersByMonthBetweenTime($dateFrom = null, $dateTo = null)
-	{
-		$sql = 'SELECT count(sa.id) as count, sum(sa.totalWithTax) as sum, us.username as username, us.id as userId FROM sale as sa'
-					. ' INNER JOIN sale_status as ss ON sa.status = ss.id'
-					. ' INNER JOIN users as us ON sa.user_id = us.id'
-                    . ' WHERE ss.saleDeleted = 0 ';
+    public function getTopSalersByMonthBetweenTime($dateFrom = null, $dateTo = null)
+    {
+        $sql = 'SELECT count(sa.id) as count, sum(sa.totalWithTax) as sum, us.username as username, us.id as userId FROM sale as sa'
+            . ' INNER JOIN sale_status as ss ON sa.status = ss.id'
+            . ' INNER JOIN users as us ON sa.user_id = us.id'
+            . ' WHERE ss.saleDeleted = 0 ';
         $data = array();
         $nextWhere = " and ";
-        if($dateFrom){
+        if ($dateFrom) {
             $data[] = $dateFrom->format('Y-m-d H:i:s');
-            $sql .= $nextWhere.' sa.created > ? ';
+            $sql .= $nextWhere . ' sa.created > ? ';
             $nextWhere = " and ";
         }
-        if($dateTo){
-            $sql .= $nextWhere.' sa.created <= ? ';
+        if ($dateTo) {
+            $sql .= $nextWhere . ' sa.created <= ? ';
             $data[] = $dateTo->format('Y-m-d H:i:s');
             $nextWhere = " and ";
-        }            
+        }
         $sql .= ' GROUP BY us.id';
         $sql .= ' ORDER BY count DESC, sum DESC';
         $sql .= ' limit 10';
@@ -37,27 +37,27 @@ class SaleRepository extends EntityRepository
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->execute($data);
         return $stmt->fetchAll();
-	}
+    }
 
-	public function getTopProductsByMonthByTime($dateFrom = null, $dateTo = null)
-	{
-		$sql = 'SELECT count(p.id) as count, sum(p.price) as sum, p.name as name, p.id as productId FROM sale as sa'
-					. ' INNER JOIN sale_status as ss ON sa.status = ss.id'
-					. ' INNER JOIN sale_item as si ON sa.id = si.sale'
-					. ' INNER JOIN product as p ON p.id = si.product'
-                    . ' WHERE ss.saleDeleted = 0 ';
+    public function getTopProductsByMonthByTime($dateFrom = null, $dateTo = null)
+    {
+        $sql = 'SELECT count(p.id) as count, sum(p.price) as sum, p.name as name, p.id as productId FROM sale as sa'
+            . ' INNER JOIN sale_status as ss ON sa.status = ss.id'
+            . ' INNER JOIN sale_item as si ON sa.id = si.sale'
+            . ' INNER JOIN product as p ON p.id = si.product'
+            . ' WHERE ss.saleDeleted = 0 ';
         $data = array();
         $nextWhere = " and ";
-        if($dateFrom){
+        if ($dateFrom) {
             $data[] = $dateFrom->format('Y-m-d H:i:s');
-            $sql .= $nextWhere.' sa.created > ? ';
+            $sql .= $nextWhere . ' sa.created > ? ';
             $nextWhere = " and ";
         }
-        if($dateTo){
-            $sql .= $nextWhere.' sa.created <= ? ';
+        if ($dateTo) {
+            $sql .= $nextWhere . ' sa.created <= ? ';
             $data[] = $dateTo->format('Y-m-d H:i:s');
             $nextWhere = " and ";
-        }            
+        }
         $sql .= ' GROUP BY MONTH(sa.created), p.id';
         $sql .= ' ORDER BY count DESC, sum DESC';
         $sql .= ' limit 10';
@@ -65,11 +65,13 @@ class SaleRepository extends EntityRepository
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->execute($data);
         return $stmt->fetchAll();
-	}
-	public function getSumSalesByYear($year){
-		$sql = 'SELECT sum(sa.totalWithTax) as sum, MONTH(sa.created) as month FROM sale as sa'
-					. ' INNER JOIN sale_status as ss ON sa.status = ss.id'
-                    . ' WHERE ss.saleDeleted = 0 ';
+    }
+
+    public function getSumSalesByYear($year)
+    {
+        $sql = 'SELECT sum(sa.totalWithTax) as sum, MONTH(sa.created) as month FROM sale as sa'
+            . ' INNER JOIN sale_status as ss ON sa.status = ss.id'
+            . ' WHERE ss.saleDeleted = 0 ';
         $data = array();
 
         $data[] = $year;
@@ -81,5 +83,14 @@ class SaleRepository extends EntityRepository
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->execute($data);
         return $stmt->fetchAll();
-	}
+    }
+
+    public function getByStatus($statuses = array())
+    {
+        $qb = $this->createQueryBuilder('s');
+        $qb->leftJoin('s.status', 'st');
+        $qb->where('st.id IN (:pending_statuses)')->setParameter('pending_statuses', $statuses);
+
+        return $qb->getQuery()->getResult();
+    }
 }
