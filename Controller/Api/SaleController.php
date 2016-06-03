@@ -50,7 +50,10 @@ class SaleController extends FOSRestController
 
 
             $response = array("success" => true, "message" => "Sale created", "entity" => $sale);
-            return $this->handleView(FOSView::create($response, Codes::HTTP_OK)->setFormat("json"));
+
+            $view = FOSView::create($response, Codes::HTTP_OK)->setFormat('json');
+            $view->getSerializationContext()->setGroups(array('public_api'));
+            return $this->handleView($view);
         }
         $response = array('success' => false, 'errors' => $form->getErrors());
         return $this->handleView(FOSView::create($response, Codes::HTTP_NOT_FOUND)->setFormat("json"));
@@ -72,7 +75,10 @@ class SaleController extends FOSRestController
             $em->persist($sale);
             $em->flush();
             $response = array("success" => true, "message" => "Sale created", "entity" => $sale);
-            return $this->handleView(FOSView::create($response, Codes::HTTP_OK)->setFormat("json"));
+
+            $view = FOSView::create($response, Codes::HTTP_OK)->setFormat('json');
+            $view->getSerializationContext()->setGroups(array('public_api'));
+            return $this->handleView($view);
         }
         $response = array('success' => false, 'errors' => $form->getErrors());
         return $this->handleView(FOSView::create($response, Codes::HTTP_NOT_FOUND)->setFormat("json"));

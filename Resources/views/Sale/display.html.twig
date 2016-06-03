@@ -22,20 +22,29 @@
                     {{ include('FlowerSalesBundle:Sale:status.html.twig',{'status': sale.status}) }}
                 </h3>
                 <div class="box-tools">
-                    <a href="{{ path('sale_pdf_export',{'id':sale.id}) }}" class="btn btn-default">
-                        Imprimir
+                    <a href="{{ path('sale_pdf_export',{'id':sale.id}) }}" class="btn btn-link btn-xs">
+                        <i class="fa fa-download"></i> Descargar
                     </a>
+                    {% if sale.document %}
+                        <a href="{{ path('finance_document_ci_show', {'id':sale.document.id}) }}" class="btn btn-link btn-xs">
+                            {{ 'view invoice'|trans({}, 'Finance')|title }}
+                        </a>
+                    {% elseif sale.status and sale.status.isInvoiceable() %}
+                        <a href="{{ path('finance_document_ci_create_from_sale', {'id':sale.id}) }}" class="btn btn-link btn-xs">
+                            {{ 'create invoice'|trans({}, 'Finance')|title }}
+                        </a>
+                    {% endif %}
                 </div>
             </div>
             <div class="box-body">
 
                 <div class="row">
                     <div class="col-sm-6">
-                    <span>Pasar a:</span>
-                    {{ include('FlowerSalesBundle:Sale:optionStatus.html.twig',{
-                        'sale':sale,
-                        'options_statuses':sale.status.following
-                    }) }}
+                        <span>Pasar a:</span>
+                        {{ include('FlowerSalesBundle:Sale:optionStatus.html.twig',{
+                            'sale':sale,
+                            'options_statuses':sale.status.following
+                        }) }}
                     </div>
                 </div>
 

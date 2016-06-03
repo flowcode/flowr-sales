@@ -41,7 +41,7 @@ class SaleRepository extends EntityRepository
 
     public function getTopProductsByMonthByTime($dateFrom = null, $dateTo = null)
     {
-        $sql = 'SELECT count(p.id) as count, sum(p.price) as sum, p.name as name, p.id as productId FROM sale as sa'
+        $sql = 'SELECT count(p.id) as count, sum(p.sale_price) as sum, p.name as name, p.id as productId FROM sale as sa'
             . ' INNER JOIN sale_status as ss ON sa.status = ss.id'
             . ' INNER JOIN sale_item as si ON sa.id = si.sale'
             . ' INNER JOIN product as p ON p.id = si.product'

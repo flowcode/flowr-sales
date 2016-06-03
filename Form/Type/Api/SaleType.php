@@ -44,6 +44,15 @@ class SaleType extends AbstractType
             ->add('payment_observations', null, array(
                 'property_path' => 'paymentObservations'
             ))
+            ->add('finance_account', 'y_tree', array(
+                'class' => 'Flower\FinancesBundle\Entity\Account',
+                'orderFields' => array('root' => 'asc','lft' => 'asc'),
+                'prefixAttributeName' => 'data-level-prefix',
+                'treeLevelField' => 'lvl',
+                'required' => false,
+                'multiple' => false,
+                'property_path' => 'financeAccount',
+                'attr' => array("class" => "tall")))
             ->add('observations')
             ->add("status", 'entity', array(
                 'class' => 'Flower\ModelBundle\Entity\Sales\SaleStatus'

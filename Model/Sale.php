@@ -115,6 +115,13 @@ class Sale
     protected $account;
 
     /**
+     * @ManyToOne(targetEntity="\Flower\FinancesBundle\Entity\Account")
+     * @JoinColumn(name="finance_account_id", referencedColumnName="id")
+     * @Groups({"public_api"})
+     */
+    protected $financeAccount;
+
+    /**
      * @ManyToOne(targetEntity="\Flower\ModelBundle\Entity\User\User")
      * @JoinColumn(name="user_id", referencedColumnName="id")
      * @Groups({"public_api"})
@@ -661,6 +668,29 @@ class Sale
     public function setDocument($document)
     {
         $this->document = $document;
+    }
+
+    /**
+     * Set financeAccount
+     *
+     * @param \Flower\FinancesBundle\Entity\Account $financeAccount
+     * @return Sale
+     */
+    public function setFinanceAccount(\Flower\FinancesBundle\Entity\Account $financeAccount = null)
+    {
+        $this->financeAccount = $financeAccount;
+
+        return $this;
+    }
+
+    /**
+     * Get financeAccount
+     *
+     * @return \Flower\FinancesBundle\Entity\Account
+     */
+    public function getFinanceAccount()
+    {
+        return $this->financeAccount;
     }
 
     function __toString()

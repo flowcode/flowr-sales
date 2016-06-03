@@ -14,15 +14,6 @@
         <div class="box" multi-app="flowerSales">
             <div class="box-header">
                 <div class="box-tools">
-                    {% if sale.document %}
-                        <a href="{{ path('finance_document_show', {'id':sale.document.id}) }}">
-                            View invoice
-                        </a>
-                    {% elseif sale.status and sale.status.isInvoiceable() %}
-                        <a href="{{ path('finance_document_ci_create_from_sale', {'id':sale.id}) }}">
-                            Create Invoice
-                        </a>
-                    {% endif %}
                 </div>
             </div>
             <toaster-container></toaster-container>
@@ -69,6 +60,8 @@
     <script src="{{ asset('bundles/flowercore/js/angular/sales/services/saleCategoryService.js') }}"
             type="text/javascript"></script>
     <script src="{{ asset('bundles/flowercore/js/angular/sales/services/paymentMethodService.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('bundles/flowercore/js/angular/sales/services/financeAccountService.js') }}"
             type="text/javascript"></script>
 
     <script src="{{ asset('bundles/flowercore/js/angular/sales/controller/salesController.js') }}"
